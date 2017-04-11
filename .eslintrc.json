@@ -9,13 +9,15 @@
         "import"
     ],
     "rules": {
-        // "global-require": 0,
-        // "no-case-declarations": 0,
         "no-param-reassign": 1,
         "react/prefer-stateless-function": 1,
         "react/jsx-no-bind": 0,
         "react/jsx-filename-extension": 0,
         "no-underscore-dangle": 0,
-        "max-len": 1
+        "max-len": 1,
+        "no-unused-vars": 1,
+        "class-methods-use-this": 1,
+        "react/prop-types": 1,
+        "react/forbid-prop-types": 1
     }
 }
