@@ -8,7 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 
-import styles from './styles.css';
+import styles from './styles.scss';
 
 class SignIn extends Gandalf {
   constructor() {
@@ -85,7 +85,7 @@ class SignIn extends Gandalf {
 
   componentWillUpdate(nextProps) {
     if (nextProps.userSignedIn) {
-      this.props.history.push('/');
+      this.props.history.push('/home');
     }
   }
 
@@ -111,7 +111,7 @@ class SignIn extends Gandalf {
     const fields = this.state.fields;
 
     return (
-      <div className={styles.signIn}>
+      <div className={styles['sign-in']}>
         <Card style={{ width: '500px' }} >
           <Paper>
             <Toolbar>

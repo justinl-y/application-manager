@@ -1,29 +1,39 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
+
+import Main from '../../containers/Main';
+import SignInContainer from '../../containers/SignIn';
+import SignUpContainer from '../../containers/SignUp';
+import NotFound from '../../components/NotFound';
 
 import Home from '../../components/Home';
 import About from '../../components/About';
-import SignInContainer from '../../containers/SignIn';
-import SignUpContainer from '../../containers/SignUp';
+
+import styles from './styles.scss';
 
 const history = createHistory();
 
 const App = () => (
-  <BrowserRouter history={history}>
-    <div>
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/sign-in" component={SignInContainer} />
-      <Route path="/sign-up" component={SignUpContainer} />
-    </div>
-  </BrowserRouter>
+  <div className={styles.app}>
+    <BrowserRouter history={history}>
+      <div>
+        <Switch>
+          <Route exact path="/" component={Main} />
+          <Route path="/sign-in" component={SignInContainer} />
+          <Route path="/sign-up" component={SignUpContainer} />
+          <Route path="/home" component={Home} />
+          <Route path="/about" component={About} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  </div>
 );
 
 export default App;
 
 /*
-
 , Link
 <ul>
   <li><Link to="/">Home</Link></li>

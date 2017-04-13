@@ -8,7 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 
-import styles from './styles.css';
+import styles from './styles.scss';
 
 class SignIn extends Gandalf {
   constructor() {

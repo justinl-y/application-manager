@@ -9,7 +9,7 @@ import muiTheme from './styles/mui-theme';
 import firebaseConfig from '../config/firebase';
 import store from './redux/store';
 import App from './containers/App';
-import './styles/index.css';
+import './styles/index.scss';
 
 // Needed for onTouchTap (Material UI)
 // http://stackoverflow.com/a/34015469/988941
