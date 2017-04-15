@@ -10,6 +10,7 @@
     ],
     "rules": {
         "global-require": 0,
+        "no-useless-constructor": 1,
         "no-param-reassign": 1,
         "react/prefer-stateless-function": 1,
         "react/jsx-no-bind": 0,

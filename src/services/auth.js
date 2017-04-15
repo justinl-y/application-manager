@@ -49,7 +49,11 @@ const signInUser = signInDetails => firebase.auth()
           const signInResult = {
             uId,
             signedIn: { signUp: false, signIn: true },
-            userName: { firstName: result.firstName, lastName: result.lastName, email: signInDetails.email },
+            userName: {
+              firstName: result.firstName,
+              lastName: result.lastName,
+              email: signInDetails.email,
+            },
             message: (`Sign-in successful, welcome back to Pot Lucky ${result.firstName}`),
           };
 

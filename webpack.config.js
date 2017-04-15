@@ -1,21 +1,5 @@
-const path = require('path');
 // const webpack = require('webpack');
-
-/* postcss: () => {
-  return [
-    autoprefixer({
-      browsers: [
-        'last 2 version',
-      ]
-    }),
-  ];
-},*/
-
-/* {
-  loader: 'autoprefixer',
-  options: {
-    browsers: 'last 2 version'
-}*/
+const path = require('path');
 
 const styleLoaders = [
   {
@@ -27,11 +11,9 @@ const styleLoaders = [
   {
     loader: 'postcss-loader',
     options: {
-      plugins: () => {
-        return [
-          require('autoprefixer'),
-        ];
-      },
+      plugins: () => [
+        require('autoprefixer')({ browsers: 'last 2 versions' }),
+      ],
     },
   },
   {
@@ -50,43 +32,50 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 const config = {
   context: path.resolve(__dirname, './src'),
-  entry: {
-    app: './index.js',
-  },
+  entry: [
+    'babel-polyfill',
+    './index.js',
+  ],
   output: {
     filename: 'app-bundle.js',
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
+    publicPath: '',
   },
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, './src'),
+    historyApiFallback: true,
+    stats: {
+      children: false,
+    },
   },
-  // devtool: 'cheap-module-eval-source-map',
-  devtool: 'eval-source-map',
-  // devtool: 'inline-source-map',
   module: {
     rules: [
       {
         test: /\.js$/,
         enforce: 'pre',
         exclude: [/node_modules/],
-        loader: 'eslint-loader',
-        options: {
-          fix: true,
-          failOnError: false,
-        },
+        use: [{
+          loader: 'eslint-loader',
+          options: {
+            fix: true,
+            failOnError: false,
+          },
+        }],
       },
       {
         test: /\.js$/,
         exclude: [/node_modules/],
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            'es2015',
-            'es2016',
-            'es2017',
-          ],
-        },
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              'es2015',
+              'es2016',
+              'es2017',
+            ],
+          },
+        }],
       },
       {
         test: /\.(scss|sass)$/,
@@ -103,5 +92,14 @@ const config = {
     new ExtractTextPlugin('styles.css'),
   ],
 };
+
+if (process.env.NODE_ENV === 'production') {
+  config.devtool = ''; // No sourcemap for production
+
+  // Add more configuration for production here like
+  // SASS & CSS loaders
+  // Offline plugin
+  // Etc,
+}
 
 module.exports = config;

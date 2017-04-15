@@ -43,40 +43,6 @@ class SignIn extends Gandalf {
       },
     ];
 
-    /*
-
-    {
-      name: 'email',
-      component: ValidatedText,
-      validators: ['email'],
-      errorPropName: 'error',
-      props: {
-        keyboardType: 'email-address',
-        placeholder: 'Email',
-        inputStyle: styles.login,
-        containerStyle: styles.container,
-        autoCapitalize: 'none',
-      },
-      getValueInOnChange: text => text,
-      debounce: 500,
-    },
-    {
-      name: 'password',
-      component: ValidatedText,
-      validators: ['required'],
-      errorPropName: 'error',
-      props: {
-        placeholder: 'Password',
-        inputStyle: styles.login,
-        containerStyle: styles.container,
-        secureTextEntry: true,
-      },
-      getValueInOnChange: text => text,
-      debounce: 500,
-    },
-
-   */
-
     super(fields);
 
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -85,7 +51,7 @@ class SignIn extends Gandalf {
 
   componentWillUpdate(nextProps) {
     if (nextProps.userSignedIn) {
-      this.props.history.push('/home');
+      this.props.history.push('/');
     }
   }
 

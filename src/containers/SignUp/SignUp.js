@@ -10,7 +10,7 @@ import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 
 import styles from './styles.scss';
 
-class SignIn extends Gandalf {
+class SignUp extends Gandalf {
   constructor() {
     const fields = [
       {
@@ -105,7 +105,7 @@ class SignIn extends Gandalf {
     const fields = this.state.fields;
 
     return (
-      <div className={styles.signIn}>
+      <div className={styles['sign-up']}>
         <Card style={{ width: '500px' }} >
           <Paper>
             <Toolbar>
@@ -139,4 +139,4 @@ class SignIn extends Gandalf {
   }
 }
 
-export default SignIn;
+export default SignUp;

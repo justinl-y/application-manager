@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Home from '../../components/Home';
+import About from '../../components/About';
+import NotFound from '../../components/NotFound';
 
 // import { userSignOut } from '../../redux/modules/authenticationActions';
 // import styles from './styles.scss';
 
 class Main extends Component {
-  constructor({ props }) {
-    super(props);
+  constructor() {
+    super();
 
     // this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillMount() {
-    if (!(this.props.userSignedIn || this.props.userSignedUp)) {
+    /* if (!(this.props.userSignedIn && this.props.userSignedUp)) {
       this.props.history.push('/sign-in');
-    }
+    }*/
   }
 
   render() {
     return (
-      <BrowserRouter history={history}>
-        <div>
-          <Switch />
-        </div>
-      </BrowserRouter>
+      <div>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
     );
   }
 }

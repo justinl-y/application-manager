@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SignUp from './SignUp';
 import { userSignUp } from '../../redux/modules/authenticationActions';
 
-class SignUpContainer extends Component {
-  render() {
-    return (
-      <SignUp
-        onSignUpClick={this.props.signUpUser}
-        userSignedUp={this.props.userSignedUp}
-        history={this.props.history}
-      />
-    );
-  }
-}
+const SignUpContainer = props => (
+  <SignUp
+    onSignUpClick={props.signUpUser}
+    userSignedUp={props.userSignedUp}
+    history={props.history}
+  />
+);
 
 SignUpContainer.propTypes = {
   signUpUser: PropTypes.func.isRequired,
