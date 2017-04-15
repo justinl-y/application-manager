@@ -1,4 +1,5 @@
 import React from 'react';
+// import { withRouter } from 'react-router-dom';
 import Gandalf from 'gandalf-validator';
 
 import { Card, CardText } from 'material-ui/Card';
@@ -107,4 +108,4 @@ class SignIn extends Gandalf {
   }
 }
 
-export default SignIn;
+export default (SignIn); // withRouter
