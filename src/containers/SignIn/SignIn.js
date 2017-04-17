@@ -1,5 +1,4 @@
 import React from 'react';
-// import { withRouter } from 'react-router-dom';
 import Gandalf from 'gandalf-validator';
 
 import { Card, CardText } from 'material-ui/Card';
@@ -88,16 +87,15 @@ class SignIn extends Gandalf {
               <form>
                 { fields.email.element }
                 { fields.password.element }
-
+                <FlatButton
+                  onClick={this.handleSignUp}
+                  label="Sign-Up"
+                />
                 <RaisedButton
                   backgroundColor="rgb(183, 28, 28)"
                   labelColor="white"
                   onClick={this.handleSignIn}
                   label="Sign-In"
-                />
-                <FlatButton
-                  onClick={this.handleSignUp}
-                  label="Sign-Up"
                 />
               </form>
             </CardText>

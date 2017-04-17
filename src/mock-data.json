@@ -1,0 +1,80 @@
+{
+  "userDetails": {
+    "id": {
+      "firstName": "string",
+      "lastName": "string",
+      "emailAddress": "string"
+    }
+  },
+
+  "role": {
+    "id": {
+      "referenceNumber": "string",
+      "title": "string",
+      "company": "string",
+      "description": "text",
+      "locationId": {
+        "name": "string"
+      },
+      "employmentTypeId": {
+        "name":"string"
+      },
+      "website": "string",
+      "contactId": {
+        "firstName": "string",
+        "lastName": "string",
+        "telephoneNumber": "string",
+        "emailAddress": "string"
+      },
+      "datePosted": "datetime",
+      "dateApplied": "datetime",
+      "notes": "string"
+    }
+  },
+
+  "contact": {
+    "id": {
+      "firstName": "string",
+      "lastName": "string",
+      "telephoneNumber": "string",
+      "email": "string",
+      "website": "string"
+    }
+  },
+
+  "location": {
+    "id": {
+      "name": "string"
+    }
+  },
+
+  "employmentType": {
+    "id": {
+      "name": "string"
+    }
+  },
+
+  "rolesByContact": {
+    "contactId": {
+      "firstName": "string",
+      "lastName": "string",
+      "roleId": {
+        "referenceNumber": "string",
+        "title": "string",
+        "dateApplied": "datetime"
+      }
+    }
+  },
+
+  "roleByLocation": {
+    "locationId": {
+      "name":"string",
+      "roleId": {
+        "referenceNumber": "string",
+        "title": "string",
+        "dateApplied": "datetime"
+      }
+    }
+  }
+}
+
