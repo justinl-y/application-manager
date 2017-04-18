@@ -10,9 +10,9 @@ const About = ({ match }) => (
   <div>
     <h1>About</h1>
 
-    <Link to="/about/me">Me</Link>
-    <Link to="/about/you">You</Link>
-    <Link to="/about/other">Other</Link>
+    <Link to="/role/me">Me</Link>
+    <Link to="/role/you">You</Link>
+    <Link to="/role/other">Other</Link>
 
     {/* <Route
         path="/about/:subject"

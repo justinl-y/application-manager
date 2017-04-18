@@ -17,7 +17,7 @@
         "name": "string"
       },
       "employmentTypeId": {
-        "name":"string"
+        "name": "string"
       },
       "website": "string",
       "contactId": {

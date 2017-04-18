@@ -3,10 +3,10 @@ import Gandalf from 'gandalf-validator';
 
 import { Card, CardText } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
+import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 
 import styles from './styles.scss';
 
@@ -76,9 +76,15 @@ class SignIn extends Gandalf {
   render() {
     const fields = this.state.fields;
 
+    const style = {
+      card: {
+        width: '500px',
+      },
+    };
+
     return (
-      <div className={styles['sign-in']}>
-        <Card style={{ width: '500px' }} >
+      <div className={styles.content}>
+        <Card style={style.card} >
           <Paper>
             <Toolbar>
               <ToolbarTitle text="Sign-In" />
