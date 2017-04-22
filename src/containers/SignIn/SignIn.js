@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
+import * as colors from 'material-ui/styles/colors';
 import styles from './styles.scss';
 
 class SignIn extends Gandalf {
@@ -98,8 +99,8 @@ class SignIn extends Gandalf {
                   label="Sign-Up"
                 />
                 <RaisedButton
-                  backgroundColor="rgb(183, 28, 28)"
-                  labelColor="white"
+                  backgroundColor={colors.cyan500}
+                  labelColor={colors.white}
                   onClick={this.handleSignIn}
                   label="Sign-In"
                 />

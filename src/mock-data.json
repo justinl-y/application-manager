@@ -13,8 +13,12 @@
       "title": "string",
       "company": "string",
       "description": "text",
-      "locationId": {
-        "name": "string"
+      "address": {
+        "address": "string",
+        "postCode": "string",
+        "locationId": {
+          "name": "string"
+        }
       },
       "employmentTypeId": {
         "name": "string"

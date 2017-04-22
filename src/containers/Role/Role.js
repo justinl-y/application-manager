@@ -1,122 +1,29 @@
-import React from 'react';
-import Gandalf from 'gandalf-validator';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
+import { Tabs, Tab } from 'material-ui/Tabs';
 import { Card, CardText } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
+import * as colors from 'material-ui/styles/colors';
 import styles from './styles.scss';
 
-class Role extends Gandalf {
+class Role extends Component {
   constructor() {
-    const fields = [
-      {
-        name: 'referenceNumber',
-        component: TextField,
-        validators: ['required'],
-        errorPropName: 'errorText',
-        props: {
-          hintText: 'Reference No.',
-          floatingLabelText: 'Reference No.',
-          style: {
-            width: '100%',
-          },
-        },
-        debounce: 500,
-      },
-      {
-        name: 'roleTitle',
-        component: TextField,
-        validators: ['required'],
-        errorPropName: 'errorText',
-        props: {
-          hintText: 'Role Title',
-          floatingLabelText: 'Role Title',
-          style: {
-            width: '100%',
-          },
-        },
-        debounce: 500,
-      },
-      {
-        name: 'hiringCompany',
-        component: TextField,
-        validators: ['required'],
-        errorPropName: 'errorText',
-        props: {
-          hintText: 'Hiring Company',
-          floatingLabelText: 'Hiring Company',
-          style: {
-            width: '100%',
-          },
-        },
-        debounce: 500,
-      },
-      {
-        name: 'description',
-        component: TextField,
-        validators: ['required'],
-        errorPropName: 'errorText',
-        props: {
-          hintText: 'Description',
-          floatingLabelText: 'Description',
-          style: {
-            width: '100%',
-          },
-        },
-        debounce: 500,
-      },
-      {
-        name: 'website',
-        component: TextField,
-        validators: ['required'],
-        errorPropName: 'errorText',
-        props: {
-          hintText: 'Website',
-          floatingLabelText: 'Website',
-          style: {
-            width: '100%',
-          },
-        },
-        debounce: 500,
-      },
-      {
-        name: 'notes',
-        component: TextField,
-        validators: ['required'],
-        errorPropName: 'errorText',
-        props: {
-          hintText: 'Notes',
-          floatingLabelText: 'Notes',
-          style: {
-            width: '100%',
-          },
-        },
-        debounce: 500,
-      },
-      {
-        name: 'datePosted',
-        component: DatePicker,
-        validators: ['required'],
-        errorPropName: 'errorText',
-        props: {
-          hintText: 'Date Posted',
-          floatingLabelText: 'Date Posted',
-          textFieldStyle: {
-            width: '100%',
-          },
-          container: 'inline',
-          autoOk: true,
-        },
-        getValueInOnChange: (e, value) => value,
-      },
-    ];
+    super();
 
-    super(fields);
+    this.state = {
+      fields: {},
+      fieldErrors: {},
+      value: null,
+    };
 
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -133,15 +40,63 @@ class Role extends Gandalf {
     "name": "string"
   },
   "website": "string",
+  "datePosted": "datetime",
+
   "contactId": {
     "firstName": "string",
     "lastName": "string",
     "telephoneNumber": "string",
     "emailAddress": "string"
   },
-  "datePosted": "datetime",
+
   "dateApplied": "datetime",
   "notes": "string"*/
+
+  handleTextFieldChange(e, validation) {
+    const fieldErrors = this.state.fieldErrors;
+    delete fieldErrors[e.target.name];
+
+    const fields = this.state.fields;
+    fields[e.target.name] = e.target.value;
+
+    validation.forEach((type) => {
+      switch (type) {
+        case 'req':
+          if (!fields[e.target.name]) {
+            const errorObject = { [e.target.name]: 'Required field' };
+            this.setState({ fieldErrors: { ...this.state.fieldErrors, ...errorObject } });
+          }
+          break;
+        case 'num':
+          if (isNaN(fields[e.target.name])) {
+            const errorObject = { [e.target.name]: 'Number required' };
+            this.setState({ fieldErrors: { ...this.state.fieldErrors, ...errorObject } });
+          }
+          break;
+        default:
+      }
+    });
+
+    this.setState({ fields });
+  }
+
+  validate(data) {
+    this.setState({
+      fieldErrors: {},
+    });
+
+    const errors = {};
+    // TODO date comparison
+    // TODO validation errors into central source
+    // TODO data formats
+
+    if (!data.roleTitle) errors.roleTitle = 'Required field';
+    if (!data.hiringCompany) errors.hiringCompany = 'Required field';
+    if (!data.description) errors.description = 'Required field';
+    if (!data.datePosted) errors.datePosted = 'Required field';
+
+    return errors;
+  }
 
   // for cancel
   handleCancel(e) {
@@ -154,9 +109,12 @@ class Role extends Gandalf {
   handleSubmit(e) {
     e.preventDefault();
 
-    const data = this.getCleanFormData();
+    const data = this.state.fields;
+    const fieldErrors = this.validate(data);
 
-    if (!data) return;
+    this.setState({ fieldErrors });
+
+    if (Object.keys(fieldErrors).length) return;
 
     console.log(data);
 
@@ -164,13 +122,24 @@ class Role extends Gandalf {
   }
 
   render() {
-    const fields = this.state.fields;
-
     const style = {
       card: {
         width: '500px',
       },
+      textField: {
+        width: '100%',
+      },
+      selectField: {
+        width: '100%',
+      },
     };
+
+    const items = [
+      <MenuItem key={1} value={1} primaryText="Permanent" />,
+      <MenuItem key={2} value={2} primaryText="Contract" />,
+      <MenuItem key={3} value={3} primaryText="Internship" />,
+      <MenuItem key={4} value={4} primaryText="Part-Time" />,
+    ];
 
     return (
       <div className={styles.content}>
@@ -181,21 +150,114 @@ class Role extends Gandalf {
             </Toolbar>
             <CardText>
               <form>
-                { fields.referenceNumber.element }
-                { fields.roleTitle.element }
-                { fields.hiringCompany.element }
-                { fields.description.element }
-                { fields.website.element }
-                { fields.notes.element }
-                { fields.datePosted.element }
+                <Tabs>
+                  <Tab label="Role Details" >
+                    <TextField
+                      style={style.textField}
+                      name="referenceNumber"
+                      hintText="Reference Number"
+                      errorText={this.state.fieldErrors.referenceNumber}
+                      floatingLabelText="Reference Number"
+                      value={this.state.fields.referenceNumber || ''}
+                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                    />
+                    <TextField
+                      style={style.textField}
+                      name="roleTitle"
+                      hintText="Role Title"
+                      errorText={this.state.fieldErrors.roleTitle}
+                      floatingLabelText="Role Title"
+                      value={this.state.fields.roleTitle || ''}
+                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                    />
 
+                    <SelectField
+                      style={style.selectField}
+                      hintText="Role Type"
+                      floatingLabelText="Role Type"
+                      value={this.state.fields.roleType}
+                      onChange={(e, i, v) => { this.setState({ fields: { ...this.state.fields, roleType: v } }); }}
+                    >
+                      {items}
+                    </SelectField>
+
+                    <TextField
+                      style={style.textField}
+                      name="hiringCompany"
+                      hintText="Hiring Company"
+                      errorText={this.state.fieldErrors.hiringCompany}
+                      floatingLabelText="Hiring Company"
+                      value={this.state.fields.hiringCompany || ''}
+                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                    />
+                    <TextField
+                      style={style.textField}
+                      name="description"
+                      hintText="Description"
+                      errorText={this.state.fieldErrors.description}
+                      floatingLabelText="Description"
+                      value={this.state.fields.description || ''}
+                      multiLine
+                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                    />
+
+                    { /* location */ }
+
+                    <TextField
+                      style={style.textField}
+                      name="website"
+                      hintText="Website"
+                      errorText={this.state.fieldErrors.website}
+                      floatingLabelText="Website"
+                      value={this.state.fields.website || ''}
+                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                    />
+                    <DatePicker
+                      textFieldStyle={{ width: '100%' }}
+                      floatingLabelText="Date Posted"
+                      errorText={this.state.fieldErrors.datePosted}
+                      hintText="Date Posted"
+                      container="inline"
+                      autoOk
+                      value={this.state.fields.datePosted}
+                      onChange={(x, d) => { this.setState({ fields: { ...this.state.fields, datePosted: d } }); }}
+                    />
+                  </Tab>
+
+                  <Tab label="Contact">
+                    { /* contact */ }
+                  </Tab>
+
+                  <Tab label="History" >
+                    <DatePicker
+                      textFieldStyle={{ width: '100%' }}
+                      floatingLabelText="Date Applied"
+                      errorText={this.state.fieldErrors.dateApplied}
+                      hintText="Date Applied"
+                      container="inline"
+                      autoOk
+                      value={this.state.fields.dateApplied}
+                      onChange={(x, d) => { this.setState({ fields: { ...this.state.fields, dateApplied: d } }); }}
+                    />
+
+                    <TextField
+                      style={style.textField}
+                      name="notes"
+                      hintText="Notes"
+                      errorText={this.state.fieldErrors.notes}
+                      floatingLabelText="Notes"
+                      value={this.state.fields.notes || ''}
+                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                    />
+                  </Tab>
+                </Tabs>
                 <FlatButton
                   onClick={this.handleCancel}
                   label="Cancel"
                 />
                 <RaisedButton
-                  backgroundColor="rgb(183, 28, 28)"
-                  labelColor="white"
+                  backgroundColor={colors.cyan500}
+                  labelColor={colors.white}
                   onClick={this.handleSubmit}
                   label="Save"
                 />
@@ -207,5 +269,10 @@ class Role extends Gandalf {
     );
   }
 }
+
+Role.propTypes = {
+  title: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
+};
 
 export default Role;

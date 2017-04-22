@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -16,6 +16,7 @@ const App = (props) => {
     <div className={styles.app}>
       <BrowserRouter>
         <div>
+          {/* <Route render={() => (userSignedIn ? <Main userSignedIn={userSignedIn} /> : <Redirect to="/sign-in" />)} />*/}
           <Route render={() => <Main />} />
           <Route path="/sign-in" component={SignInContainer} />
           <Route path="/sign-up" component={SignUpContainer} />
@@ -43,7 +44,7 @@ export default connect(
 
 
 /*
-<Route render={() => (userSignedIn ? <Main userSignedIn={userSignedIn} /> : <Redirect to="/sign-in" />)} />
+<Route render={() => <Main />} />
 */
 
 

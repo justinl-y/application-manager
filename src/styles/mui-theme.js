@@ -14,9 +14,11 @@ const muiTheme = getMuiTheme({
     alternateTextColor: colors.white,
     canvasColor: colors.white,
     borderColor: colors.grey300,
-    disabledColor: colors.darkBlack,
+    // disabledColor: colors.darkBlack,
+    disabledColor: colors.grey300,
     pickerHeaderColor: colors.cyan500,
-    clockCircleColor: colors.darkBlack,
+    // clockCircleColor: colors.darkBlack,
+    clockCircleColor: colors.black100,
     shadowColor: colors.fullBlack,
   },
 });

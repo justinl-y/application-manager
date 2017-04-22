@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 
+import * as colors from 'material-ui/styles/colors';
 import styles from './styles.scss';
 
 class SignUp extends Gandalf {
@@ -124,8 +125,8 @@ class SignUp extends Gandalf {
                 />
 
                 <RaisedButton
-                  backgroundColor="rgb(183, 28, 28)"
-                  labelColor="white"
+                  backgroundColor={colors.cyan500}
+                  labelColor={colors.white}
                   onClick={this.handleSignUp}
                   label="Sign-Up"
                 />
