@@ -52,6 +52,18 @@ class Role extends Component {
   "dateApplied": "datetime",
   "notes": "string"*/
 
+  roleTypeItems() {
+    const items = Object.entries(this.props.roleTypes).map(item => (
+      <MenuItem
+        key={Math.random() * Date.now()}
+        value={item[0]}
+        primaryText={item[1]}
+      />
+    ));
+
+    return items;
+  }
+
   handleTextFieldChange(e, validation) {
     const fieldErrors = this.state.fieldErrors;
     delete fieldErrors[e.target.name];
@@ -59,26 +71,38 @@ class Role extends Component {
     const fields = this.state.fields;
     fields[e.target.name] = e.target.value;
 
-    validation.forEach((type) => {
-      switch (type) {
-        case 'req':
-          if (!fields[e.target.name]) {
-            const errorObject = { [e.target.name]: 'Required field' };
-            this.setState({ fieldErrors: { ...this.state.fieldErrors, ...errorObject } });
-          }
-          break;
-        case 'num':
-          if (isNaN(fields[e.target.name])) {
-            const errorObject = { [e.target.name]: 'Number required' };
-            this.setState({ fieldErrors: { ...this.state.fieldErrors, ...errorObject } });
-          }
-          break;
-        default:
-      }
-    });
+    if (validation) {
+      validation.forEach((type) => {
+        switch (type) {
+          case 'req':
+            if (!fields[e.target.name]) {
+              const errorObject = { [e.target.name]: 'Required field' };
+              this.setState({ fieldErrors: { ...this.state.fieldErrors, ...errorObject } });
+            }
+            break;
+          case 'num':
+            if (isNaN(fields[e.target.name])) {
+              const errorObject = { [e.target.name]: 'Number required' };
+              this.setState({ fieldErrors: { ...this.state.fieldErrors, ...errorObject } });
+            }
+            break;
+          default:
+        }
+      });
+    }
 
     this.setState({ fields });
   }
+
+  /* handleSelectFieldChange(e, i, v, validation) {
+    console.log(e.target);
+
+    const fieldErrors = this.state.fieldErrors;
+    delete fieldErrors[e.target.name];
+
+    const fields = this.state.fields;
+    fields[e.target.name] = e.target.value;
+  }*/
 
   validate(data) {
     this.setState({
@@ -93,22 +117,18 @@ class Role extends Component {
     if (!data.roleTitle) errors.roleTitle = 'Required field';
     if (!data.hiringCompany) errors.hiringCompany = 'Required field';
     if (!data.description) errors.description = 'Required field';
-    if (!data.datePosted) errors.datePosted = 'Required field';
+    // if (!data.datePosted) errors.datePosted = 'Required field';
 
     return errors;
   }
 
   // for cancel
-  handleCancel(e) {
-    e.preventDefault();
-
+  handleCancel() {
     this.props.history.push('/');
   }
 
   // for submit
-  handleSubmit(e) {
-    e.preventDefault();
-
+  handleSubmit() {
     const data = this.state.fields;
     const fieldErrors = this.validate(data);
 
@@ -134,13 +154,6 @@ class Role extends Component {
       },
     };
 
-    const items = [
-      <MenuItem key={1} value={1} primaryText="Permanent" />,
-      <MenuItem key={2} value={2} primaryText="Contract" />,
-      <MenuItem key={3} value={3} primaryText="Internship" />,
-      <MenuItem key={4} value={4} primaryText="Part-Time" />,
-    ];
-
     return (
       <div className={styles.content}>
         <Card style={style.card} >
@@ -159,7 +172,7 @@ class Role extends Component {
                       errorText={this.state.fieldErrors.referenceNumber}
                       floatingLabelText="Reference Number"
                       value={this.state.fields.referenceNumber || ''}
-                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                      onChange={e => this.handleTextFieldChange(e)}
                     />
                     <TextField
                       style={style.textField}
@@ -177,8 +190,9 @@ class Role extends Component {
                       floatingLabelText="Role Type"
                       value={this.state.fields.roleType}
                       onChange={(e, i, v) => { this.setState({ fields: { ...this.state.fields, roleType: v } }); }}
+                      // onChange={(e, i, v) => this.handleSelectFieldChange(e, i, v, ['req'])}
                     >
-                      {items}
+                      {this.roleTypeItems()}
                     </SelectField>
 
                     <TextField
@@ -210,7 +224,7 @@ class Role extends Component {
                       errorText={this.state.fieldErrors.website}
                       floatingLabelText="Website"
                       value={this.state.fields.website || ''}
-                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                      onChange={e => this.handleTextFieldChange(e)}
                     />
                     <DatePicker
                       textFieldStyle={{ width: '100%' }}
@@ -247,7 +261,8 @@ class Role extends Component {
                       errorText={this.state.fieldErrors.notes}
                       floatingLabelText="Notes"
                       value={this.state.fields.notes || ''}
-                      onChange={e => this.handleTextFieldChange(e, ['req'])}
+                      multiLine
+                      onChange={e => this.handleTextFieldChange(e)}
                     />
                   </Tab>
                 </Tabs>
@@ -273,6 +288,7 @@ class Role extends Component {
 Role.propTypes = {
   title: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
+  roleTypes: PropTypes.object.isRequired,
 };
 
 export default Role;

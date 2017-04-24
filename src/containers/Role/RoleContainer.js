@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Role from './Role';
+import { fetchRoleTypes } from '../../redux/modules/roleTypeActions';
 
-const RoleContainer = props => (
-  <Role
-    title={props.title}
-    history={props.history}
-  />
-);
+class RoleContainer extends Component {
+  componentWillMount() {
+    this.props.fetchRoleTypes();
+  }
+
+  render() {
+    return (
+      <Role
+        title={this.props.title}
+        history={this.props.history}
+        roleTypes={this.props.roleTypes}
+      />
+    );
+  }
+}
 
 RoleContainer.propTypes = {
   title: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
+  fetchRoleTypes: PropTypes.func.isRequired,
+  roleTypes: PropTypes.object.isRequired,
 };
 
 RoleContainer.defaultProps = {
@@ -21,13 +33,13 @@ RoleContainer.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  // userSignedIn: state.userAuthentication.signedIn.signIn,
+  roleTypes: state.roleTypes,
 });
 
 const mapDispatchToProps = dispatch => ({
-  /* signInUser: (data) => {
-    dispatch(userSignIn(data));
-  },*/
+  fetchRoleTypes: () => {
+    dispatch(fetchRoleTypes());
+  },
 });
 
 export default connect(

@@ -1,3 +1,5 @@
+import { USER_SIGN_IN, USER_SIGN_OUT } from './authenticationActions';
+
 const initialState = {
   signedIn: {},
   uId: null,
@@ -7,7 +9,7 @@ const initialState = {
 
 const userSignInReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'USER_SIGN_IN':
+    case USER_SIGN_IN:
       return {
         ...state,
         signedIn: { ...action.payload.signedIn },
@@ -15,7 +17,7 @@ const userSignInReducer = (state = initialState, action) => {
         userName: { ...action.payload.userName },
         message: action.payload.message,
       };
-    case 'USER_SIGN_OUT':
+    case USER_SIGN_OUT:
       return {
         ...state,
         signedIn: {},
