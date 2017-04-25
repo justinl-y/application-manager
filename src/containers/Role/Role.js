@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Card, CardText } from 'material-ui/Card';
@@ -267,8 +268,8 @@ class Role extends Component {
                   </Tab>
                 </Tabs>
                 <FlatButton
-                  onClick={this.handleCancel}
                   label="Cancel"
+                  onClick={this.handleCancel}
                 />
                 <RaisedButton
                   backgroundColor={colors.cyan500}
@@ -292,3 +293,14 @@ Role.propTypes = {
 };
 
 export default Role;
+
+/*
+<Link
+                  to="/"
+                >
+                  <FlatButton
+                    label="Cancel"
+                    onClick={this.handleCancel}
+                  />
+                </Link>
+                */

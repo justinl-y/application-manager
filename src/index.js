@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
+import { BrowserRouter } from 'react-router-dom';
+
 import muiTheme from './styles/mui-theme';
 
 import firebaseConfig from '../config/firebase';
@@ -21,7 +24,9 @@ firebase.initializeApp(firebaseConfig);
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root'),

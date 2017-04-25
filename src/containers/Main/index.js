@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import AppBar from 'material-ui/AppBar';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import Snackbar from 'material-ui/Snackbar';
 
-import NavBarMain from '../../components/NavBarMain';
-import RoleList from '../../containers/RoleList';
+import RoleList from '../../components/RoleList';
 import RoleContainer from '../../containers/Role';
-import NotFound from '../../components/NotFound';
 
-import { clearMessageText } from '../../redux/modules/messageActions';
+import { addRole } from '../../redux/modules/roleActions';
 
 import styles from './styles.scss';
 
@@ -22,55 +18,31 @@ const style = {
   marginBottom: 25,
 };
 
-const newRole = () => {
-  // history.push('/role/new');
-};
-
 class Main extends Component {
   constructor() {
     super();
 
-    this.state = {
-      open: false,
-    };
-
-    this.handleRequestClose.bind(this);
+    this.newRole = this.newRole.bind(this);
   }
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
+  newRole() {
+    this.props.addRole();
   }
 
   render() {
     return (
-      <div className={styles.content}>
-        <AppBar>
-          <NavBarMain />
-        </AppBar>
+      <div>
+        <RoleList />
 
         <div className={styles['add-role-container']}>
-          <Link to="/role/new">
+          <Link to="/roles/new">
             <FloatingActionButton style={style}>
-              <ContentAdd onClick={newRole} />
+              <ContentAdd onClick={this.newRole} />
             </FloatingActionButton>
           </Link>
         </div>
 
-        <Switch>
-          <Route exact path="/" component={RoleList} />
-          <Route path="/role/new" component={RoleContainer} />
-          <Route path="/role/:role" component={RoleContainer} />
-          <Route component={NotFound} />
-        </Switch>
-
-        <Snackbar
-          open={this.state.open}
-          message={this.props.message.text === undefined ? '' : this.props.message.text}
-          autoHideDuration={3000}
-          onRequestClose={this.handleRequestClose}
-        />
+        <Route path="/roles/new" component={RoleContainer} />
       </div>
     );
   }
@@ -78,25 +50,19 @@ class Main extends Component {
 
 Main.defaultProps = {
   userSignedIn: false,
-  message: PropTypes.object,
 };
 
 Main.propTypes = {
-  userSignedIn: PropTypes.bool,
-  message: PropTypes.object,
+  addRole: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  message: state.message,
-});
-
 const mapDispatchToProps = dispatch => ({
-  clearMessageText: () => {
-    dispatch(clearMessageText());
+  addRole: () => {
+    dispatch(addRole());
   },
 });
 
 export default connect(
-  // mapStateToProps,
-  // mapDispatchToProps,
+  null,
+  mapDispatchToProps,
 )(Main);
