@@ -39,7 +39,7 @@ const config = {
   output: {
     filename: 'app-bundle.js',
     path: path.resolve(__dirname, './dist'),
-    publicPath: '',
+    publicPath: '/',
   },
   devtool: 'inline-source-map',
   devServer: {

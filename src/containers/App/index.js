@@ -1,56 +1,34 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 
-import RouteWithLayout from '../../components/RouteWithLayout';
+import PrivateRoute from '../../components/PrivateRoute';
+import Main from '../Main';
 import SignInContainer from '../../containers/SignIn';
 import SignUpContainer from '../../containers/SignUp';
-import Main from '../Main';
 import NotFound from '../../components/NotFound';
+
+import RoleList from '../../components/RoleList';
+import RoleContainer from '../../containers/Role';
 
 import styles from './styles.scss';
 
-const App = (props) => {
-  const { userSignedIn } = props;
+const App = () => (
+  <div className={styles.app}>
+    <Switch>
+      <PrivateRoute exact path="/" component={Main} />
+      <Route path="/sign-in" component={SignInContainer} />
+      <Route path="/sign-up" component={SignUpContainer} />
+      <Route component={NotFound} />
+    </Switch>
+  </div>
+);
 
-  return (
-    <div className={styles.app}>
-      {/* <Route render={() => (userSignedIn ? <Main userSignedIn={userSignedIn} /> : <Redirect to="/sign-in" />)} />*/}
-      <Switch>
-        <Route path="/roles" component={Main} />
-        <Route path="/sign-in" component={SignInContainer} />
-        <Route path="/sign-up" component={SignUpContainer} />
-        <Route
-          exact path="/" render={() => (
-            <Redirect
-              to="/roles"
-            />)}
-        />
-        <Route component={NotFound} />
-      </Switch>
-    </div>
-  );
-};
-
-App.defaultProps = {
-  userSignedIn: false,
-};
-
-App.propTypes = {
-  userSignedIn: PropTypes.bool,
-};
-
-const mapStateToProps = state => ({
-  userSignedIn: state.userAuthentication.signedIn.signIn,
-});
-
-export default connect(
-  mapStateToProps,
-)(App);
+export default withRouter(App);
 
 /*
-<RouteWithLayout path="/role/new" component={RoleContainer} />
+
+
+<LayoutWithRoute path="/role/new" component={RoleContainer} />
             <Route path="/role/:role" component={RoleContainer} />
 
 <Route render={() => <Main />} />

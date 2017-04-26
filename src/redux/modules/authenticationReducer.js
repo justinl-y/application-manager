@@ -1,4 +1,7 @@
-import { USER_SIGN_IN, USER_SIGN_OUT } from './authenticationActions';
+import {
+  USER_SIGN_IN,
+  USER_SIGN_OUT,
+} from './authenticationActions';
 
 const initialState = {
   signedIn: {},

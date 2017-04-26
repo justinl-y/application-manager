@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import NavbarMain from '../../components/NavBarMain';
 import RoleList from '../../components/RoleList';
 import RoleContainer from '../../containers/Role';
 
@@ -19,8 +20,8 @@ const style = {
 };
 
 class Main extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.newRole = this.newRole.bind(this);
   }
@@ -32,7 +33,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <RoleList />
+        <NavbarMain />
 
         <div className={styles['add-role-container']}>
           <Link to="/roles/new">
@@ -42,6 +43,8 @@ class Main extends Component {
           </Link>
         </div>
 
+
+        <Route path="/roles" component={RoleList} />
         <Route path="/roles/new" component={RoleContainer} />
       </div>
     );
@@ -53,6 +56,7 @@ Main.defaultProps = {
 };
 
 Main.propTypes = {
+  userSignedIn: PropTypes.bool,
   addRole: PropTypes.func.isRequired,
 };
 
@@ -62,7 +66,20 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(
+export default withRouter(connect(
   null,
   mapDispatchToProps,
-)(Main);
+)(Main));
+
+/*
+
+ <Switch>
+          <Route path="/roles/new" component={RoleContainer} />
+        </Switch>
+<Route
+          exact path="/" render={() => (
+            <Redirect
+              to="/roles"
+            />
+          )}
+        />*/
