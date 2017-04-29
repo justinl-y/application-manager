@@ -5,7 +5,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({ userSignedIn, ...rest, component }) => (
+const PrivateRoute = ({ userSignedIn = true, ...rest, component }) => (
   <Route {...rest} component={props => (userSignedIn ? React.createElement(component, props) : <Redirect to="/sign-in" />)} />
 );
 
@@ -14,11 +14,13 @@ PrivateRoute.defaultProps = {
 };
 
 PrivateRoute.propTypes = {
+  component: PropTypes.func.isRequired,
   userSignedIn: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
-  userSignedIn: state.userAuthentication.signedIn.signIn,
+  // userSignedIn: state.userAuthentication.signedIn.signIn,
+  userSignedIn: true,
 });
 
 export default connect(

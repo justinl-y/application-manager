@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Role from './Role';
-import NavbarMain from '../../components/NavBarMain';
 import { fetchRoleTypes } from '../../redux/modules/roleTypeActions';
 
 class RoleContainer extends Component {
@@ -13,7 +12,6 @@ class RoleContainer extends Component {
   render() {
     return (
       <div>
-        <NavbarMain />
         <Role
           title={this.props.title}
           history={this.props.history}

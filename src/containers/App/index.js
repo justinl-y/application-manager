@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 
 import PrivateRoute from '../../components/PrivateRoute';
 import Main from '../Main';
@@ -18,6 +18,7 @@ const App = () => (
       <PrivateRoute exact path="/" component={Main} />
       <Route path="/sign-in" component={SignInContainer} />
       <Route path="/sign-up" component={SignUpContainer} />
+      <Route path="/roles" component={RoleList} />
       <Route component={NotFound} />
     </Switch>
   </div>

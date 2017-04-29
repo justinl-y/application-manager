@@ -43,20 +43,15 @@ class Main extends Component {
           </Link>
         </div>
 
-
-        <Route path="/roles" component={RoleList} />
-        <Route path="/roles/new" component={RoleContainer} />
+        <Switch>
+          <Route path="/roles/new" component={RoleContainer} />
+        </Switch>
       </div>
     );
   }
 }
 
-Main.defaultProps = {
-  userSignedIn: false,
-};
-
 Main.propTypes = {
-  userSignedIn: PropTypes.bool,
   addRole: PropTypes.func.isRequired,
 };
 
@@ -72,6 +67,13 @@ export default withRouter(connect(
 )(Main));
 
 /*
+        <Route
+          exact path="/" render={() => (
+            <Redirect
+              to="/roles"
+            />
+          )}
+        />
 
  <Switch>
           <Route path="/roles/new" component={RoleContainer} />
