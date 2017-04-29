@@ -12,10 +12,10 @@
   "description": "application-manager",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
-    "firebase": "^3.7.5",
+    "firebase": "^3.9.0",
     "gandalf-validator": "^0.8.4",
-    "material-ui": "^0.17.2",
-    "prop-types": "^15.5.6",
+    "material-ui": "^0.17.4",
+    "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.3",
     "react-redux": "^5.0.4",

@@ -1,16 +1,14 @@
 import firebase from 'firebase';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import { BrowserRouter } from 'react-router-dom';
-
-import muiTheme from './styles/mui-theme';
-
 import firebaseConfig from '../config/firebase';
 import store from './redux/store';
+import muiTheme from './styles/mui-theme';
 import App from './containers/App';
 import './styles/index.scss';
 

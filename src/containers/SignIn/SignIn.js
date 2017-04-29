@@ -113,4 +113,4 @@ class SignIn extends Gandalf {
   }
 }
 
-export default (SignIn); // withRouter
+export default (SignIn);

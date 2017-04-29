@@ -6,7 +6,7 @@ const NavBarMain = () => (
   <AppBar>
     <ul>
       <li><NavLink to="/" activeClassName="selected">Home</NavLink></li>
-      <li><NavLink to="/roles/new" activeClassName="selected">Role</NavLink></li>
+      <li><NavLink to="/roles" activeClassName="selected">Roles</NavLink></li>
     </ul>
   </AppBar>
 );

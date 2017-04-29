@@ -125,7 +125,7 @@ class Role extends Component {
 
   // for cancel
   handleCancel() {
-    this.props.history.push('/');
+    this.props.history.push('/roles');
   }
 
   // for submit
@@ -294,13 +294,3 @@ Role.propTypes = {
 
 export default Role;
 
-/*
-<Link
-                  to="/"
-                >
-                  <FlatButton
-                    label="Cancel"
-                    onClick={this.handleCancel}
-                  />
-                </Link>
-                */
