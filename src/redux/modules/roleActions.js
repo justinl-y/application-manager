@@ -52,6 +52,26 @@ export const fetchRole = id => (dispatch) => {
       .catch(error => console.log(error));
 };
 
+export const insertRole = role => (dispatch) => {
+  // dispatch(loadingResource());
+  roleApi.add(role)
+      .then((result) => {
+        dispatch(addRole(result));
+        // dispatch(doneLoading());
+      })
+      .catch(error => console.log(error));
+};
+
+export const updateRole = role => (dispatch) => {
+  // dispatch(loadingResource());
+  roleApi.edit(role)
+      .then((result) => {
+        dispatch(editRole(result));
+        // dispatch(doneLoading());
+      })
+      .catch(error => console.log(error));
+};
+
 export const insertRoleType = data => (dispatch) => {
   roleApi.add(data)
       .then((result) => {

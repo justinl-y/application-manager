@@ -15,12 +15,12 @@ const style = {
   marginBottom: 25,
 };
 
-const Roles = ({ addRole }) => (
+const Roles = ({ match, addRole }) => (
   <div>
     <NavbarMain />
 
     <div className={styles['add-role-container']}>
-      <Link to="/roles/new">
+      <Link to={`${match.url}/new`}>
         <FloatingActionButton style={style}>
           <ContentAdd onClick={addRole} />
         </FloatingActionButton>
@@ -29,20 +29,21 @@ const Roles = ({ addRole }) => (
 
     <Switch>
       <Route
-        exact path="/roles" render={() => (
+        exact path={`${match.url}`} render={() => (
           <Redirect
-            to="/roles/list"
+            to={`${match.url}/list`}
           />)}
       />
-      <Route path="/roles/list" component={RoleList} />
-      <Route path="/roles/new" component={RoleContainer} />
-      <Route path="/role/:role" component={RoleContainer} />
+      <Route path={`${match.url}/list`} component={RoleList} />
+      <Route path={`${match.url}/new`} component={RoleContainer} />
+      <Route path={`${match.url}/:roleId`} component={RoleContainer} />
     </Switch>
   </div>
 );
 
 Roles.propTypes = {
   addRole: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default Roles;

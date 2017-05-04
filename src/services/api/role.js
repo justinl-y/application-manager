@@ -3,13 +3,15 @@ import api from './base';
 const getRoles = () => api.get('/role/')
     .then(result => result)
     .catch(err => (
-      `The following error has occured: ${err}`
+      // `The following error has occured: ${err}`
+      console.log(err)
     ));
 
 const getRole = id => api.get(`/role/${id}`)
     .then(result => result)
     .catch(err => (
-      `The following error has occured: ${err}`
+      // `The following error has occured: ${err}`
+      console.log(err)
     ));
 
 const addRole = data => api.push('/role', data)
@@ -17,7 +19,8 @@ const addRole = data => api.push('/role', data)
       'Role added.'
     ))
     .catch(err => (
-      `The following error has occured: ${err}`
+      // `The following error has occured: ${err}`
+      console.log(err)
     ));
 
 const editRole = data => api.set(`/role/${data.id}`, data)
@@ -25,7 +28,8 @@ const editRole = data => api.set(`/role/${data.id}`, data)
       'Role edited.'
     ))
     .catch(err => (
-      `The following error has occured: ${err}`
+      // `The following error has occured: ${err}`
+      console.log(err)
     ));
 
 export default {

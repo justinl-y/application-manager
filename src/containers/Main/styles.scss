@@ -1,9 +1,36 @@
-.add-role-container {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  //height: 75vh;
-  //display: flex;
-  //justify-content: flex-end;
-  //align-items: flex-end;
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 25px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin button {
+	display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 200px;
+}
+
+.button-1 {
+  @include button;
+  background-color: red;
+}
+
+.button-2 {
+  @include button;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: yellow;
+}
+
+.button-3 {
+  @include button;
+  background-color: blueviolet;
 }

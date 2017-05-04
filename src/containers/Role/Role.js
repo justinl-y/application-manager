@@ -125,6 +125,7 @@ class Role extends Component {
 
   // for cancel
   handleCancel() {
+    // this.props.history.push(`${this.props.match.url}`);
     this.props.history.push('/roles');
   }
 
@@ -139,7 +140,7 @@ class Role extends Component {
 
     console.log(data);
 
-    // this.props.onSignUpClick(data);
+    this.props.saveRole(data);
   }
 
   render() {
@@ -290,7 +291,8 @@ Role.propTypes = {
   title: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
   roleTypes: PropTypes.object.isRequired,
+  // match: PropTypes.object.isRequired,
+  saveRole: PropTypes.func.isRequired,
 };
 
 export default Role;
-

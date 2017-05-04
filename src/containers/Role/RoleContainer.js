@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Role from './Role';
 import { fetchRoleTypes } from '../../redux/modules/roleTypeActions';
+import { insertRole, updateRole } from '../../redux/modules/roleActions';
 
 class RoleContainer extends Component {
   componentWillMount() {
@@ -13,9 +14,11 @@ class RoleContainer extends Component {
     return (
       <div>
         <Role
-          title={this.props.title}
+          title={this.props.isNew ? 'Add New Role' : 'Edit Role'}
           history={this.props.history}
           roleTypes={this.props.roleTypes}
+          match={this.props.match}
+          saveRole={this.props.isNew ? this.props.insertRole : this.props.updateRole}
         />
       </div>
     );
@@ -23,24 +26,29 @@ class RoleContainer extends Component {
 }
 
 RoleContainer.propTypes = {
-  title: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
-  fetchRoleTypes: PropTypes.func.isRequired,
   roleTypes: PropTypes.object.isRequired,
-};
-
-RoleContainer.defaultProps = {
-  title: 'Add New Role',
-  isNew: true,
+  match: PropTypes.object.isRequired,
+  fetchRoleTypes: PropTypes.func.isRequired,
+  insertRole: PropTypes.func.isRequired,
+  updateRole: PropTypes.func.isRequired,
+  isNew: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   roleTypes: state.roleTypes,
+  isNew: state.role.isNew,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchRoleTypes: () => {
     dispatch(fetchRoleTypes());
+  },
+  insertRole: (role) => {
+    dispatch(insertRole(role));
+  },
+  updateRole: (role) => {
+    dispatch(updateRole(role));
   },
 });
 

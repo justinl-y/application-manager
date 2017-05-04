@@ -13,7 +13,10 @@ class RolesContainer extends Component {
   render() {
     return (
       <div>
-        <Roles addRole={this.props.addRole} />
+        <Roles
+          addRole={this.props.addRole}
+          match={this.props.match}
+        />
       </div>
     );
   }
@@ -21,6 +24,7 @@ class RolesContainer extends Component {
 
 RolesContainer.propTypes = {
   addRole: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

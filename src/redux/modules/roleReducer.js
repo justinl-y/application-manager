@@ -15,12 +15,12 @@ const roleReducer = (state = initialState, action) => {
     case LOAD_ROLE:
       return state;
     case ADD_ROLE:
-      return { ...state, status: 'Add', id: 0 };
+      return { ...state, isNew: true, id: 0 };
     case EDIT_ROLE:
-      return { ...state, status: 'Edit' };
+      return { ...state, isNew: false };
     case SAVE_ROLE:
       return { ...state,
-        status: action.payload.id !== 0 ? 'Edit' : 'Add',
+        isNew: action.payload.id === 0,
         id: action.payload.id,
         message: action.payload.message,
       };

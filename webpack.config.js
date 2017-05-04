@@ -26,7 +26,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: path.resolve(__dirname, './public/index.html'),
-  filename: 'index.html',
+  // filename: 'index.html',
   inject: 'body',
 });
 
