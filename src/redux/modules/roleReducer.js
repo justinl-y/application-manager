@@ -1,5 +1,4 @@
 import {
-  LOAD_ROLES,
   LOAD_ROLE,
   ADD_ROLE,
   EDIT_ROLE,
@@ -10,8 +9,6 @@ const initialState = {};
 
 const roleReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_ROLES:
-      return state;
     case LOAD_ROLE:
       return state;
     case ADD_ROLE:

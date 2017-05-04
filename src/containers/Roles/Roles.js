@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import NavbarMain from '../../components/NavBarMain';
-import RoleList from '../../components/RoleList';
+import RolesList from '../../components/RolesList';
 import RoleContainer from '../../containers/Role';
 
 import styles from './styles.scss';
@@ -15,7 +15,7 @@ const style = {
   marginBottom: 25,
 };
 
-const Roles = ({ match, addRole }) => (
+const Roles = ({ match, addRole, rolesList }) => (
   <div>
     <NavbarMain />
 
@@ -34,7 +34,7 @@ const Roles = ({ match, addRole }) => (
             to={`${match.url}/list`}
           />)}
       />
-      <Route path={`${match.url}/list`} component={RoleList} />
+      <Route path={`${match.url}/list`} component={() => <RolesList rolesList={rolesList} />} />
       <Route path={`${match.url}/new`} component={RoleContainer} />
       <Route path={`${match.url}/:roleId`} component={RoleContainer} />
     </Switch>
@@ -44,6 +44,7 @@ const Roles = ({ match, addRole }) => (
 Roles.propTypes = {
   addRole: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
+  rolesList: PropTypes.object.isRequired,
 };
 
 export default Roles;

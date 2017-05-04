@@ -1,20 +1,13 @@
 import api from './base';
 
-const getRoles = () => api.get('/role/')
+const getRole = id => api.get(`/roles/${id}`)
     .then(result => result)
     .catch(err => (
       // `The following error has occured: ${err}`
       console.log(err)
     ));
 
-const getRole = id => api.get(`/role/${id}`)
-    .then(result => result)
-    .catch(err => (
-      // `The following error has occured: ${err}`
-      console.log(err)
-    ));
-
-const addRole = data => api.push('/role', data)
+const addRole = data => api.push('/roles', data)
     .then(() => (
       'Role added.'
     ))
@@ -23,7 +16,7 @@ const addRole = data => api.push('/role', data)
       console.log(err)
     ));
 
-const editRole = data => api.set(`/role/${data.id}`, data)
+const editRole = data => api.set(`/roles/${data.id}`, data)
     .then(() => (
       'Role edited.'
     ))
@@ -33,8 +26,7 @@ const editRole = data => api.set(`/role/${data.id}`, data)
     ));
 
 export default {
-  getMany: getRoles,
-  getOne: getRole,
+  get: getRole,
   add: addRole,
   edit: editRole,
 };
