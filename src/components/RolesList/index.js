@@ -5,13 +5,22 @@ import { Card, CardText } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import FlatButton from 'material-ui/FlatButton';
+
 
 import styles from './styles.scss';
 
 class RolesList extends Component {
-  render() {
-    console.log(this.props.rolesList);
+  editRole(roleId) {
+    this.props.editRole(roleId);
+    this.props.history.push(`${this.props.match.url}/${roleId}`);
+  }
 
+  deleteRole(roleId) {
+    console.log(roleId);
+  }
+
+  render() {
     const style = {
       card: {
         width: '1000px',
@@ -26,7 +35,7 @@ class RolesList extends Component {
               <ToolbarTitle text="Roles Applied" />
             </Toolbar>
             <CardText>
-              <Table onRowSelection={() => console.log('row clicked')}>
+              <Table selectable={false}>
                 <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                   <TableRow>
                     <TableHeaderColumn>Date Applied</TableHeaderColumn>
@@ -41,6 +50,18 @@ class RolesList extends Component {
                         <TableRowColumn>{role[0]}</TableRowColumn>
                         <TableRowColumn>{role[1].roleTitle}</TableRowColumn>
                         <TableRowColumn>{role[1].hiringCompany}</TableRowColumn>
+                        <TableRowColumn>
+                          <FlatButton
+                            label="Edit"
+                            onClick={() => this.editRole(role[0])}
+                          />
+                        </TableRowColumn>
+                        <TableRowColumn>
+                          <FlatButton
+                            label="Delete"
+                            onClick={() => this.deleteRole(role[0])}
+                          />
+                        </TableRowColumn>
                       </TableRow>
                     ))
                   }
@@ -55,6 +76,8 @@ class RolesList extends Component {
 }
 
 RolesList.propTypes = {
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   rolesList: PropTypes.object.isRequired,
 };
 

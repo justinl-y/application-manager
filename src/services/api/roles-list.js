@@ -1,6 +1,6 @@
 import api from './base';
 
-const getRoles = () => api.get('/role')
+const getRoles = () => api.get('/roles')
     .then(result => result)
     .catch(err => (
       // `The following error has occured: ${err}`

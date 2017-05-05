@@ -125,8 +125,7 @@ class Role extends Component {
 
   // for cancel
   handleCancel() {
-    // this.props.history.push(`${this.props.match.url}`);
-    this.props.history.push('/roles');
+    this.props.history.push(`${this.props.match.url}`);
   }
 
   // for submit
@@ -141,6 +140,7 @@ class Role extends Component {
     console.log(data);
 
     this.props.saveRole(data);
+    this.props.history.push(`${this.props.match.url}`);
   }
 
   render() {
@@ -288,11 +288,12 @@ class Role extends Component {
 }
 
 Role.propTypes = {
-  title: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
   roleTypes: PropTypes.object.isRequired,
-  // match: PropTypes.object.isRequired,
   saveRole: PropTypes.func.isRequired,
+  unloadRole: PropTypes.func.isRequired,
 };
 
 export default Role;

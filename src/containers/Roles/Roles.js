@@ -15,7 +15,7 @@ const style = {
   marginBottom: 25,
 };
 
-const Roles = ({ match, addRole, rolesList }) => (
+const Roles = ({ history, match, rolesList, addRole, editRole }) => (
   <div>
     <NavbarMain />
 
@@ -29,22 +29,41 @@ const Roles = ({ match, addRole, rolesList }) => (
 
     <Switch>
       <Route
-        exact path={`${match.url}`} render={() => (
+        exact path={`${match.url}`}
+        render={() => (
           <Redirect
             to={`${match.url}/list`}
-          />)}
+          />
+        )}
       />
-      <Route path={`${match.url}/list`} component={() => <RolesList rolesList={rolesList} />} />
-      <Route path={`${match.url}/new`} component={RoleContainer} />
-      <Route path={`${match.url}/:roleId`} component={RoleContainer} />
+      <Route
+        path={`${match.url}/list`}
+        component={() => (
+          <RolesList history={history} match={match} rolesList={rolesList} editRole={editRole} />
+        )}
+      />
+      <Route
+        path={`${match.url}/new`}
+        component={() => (
+          <RoleContainer history={history} match={match} />
+        )}
+      />
+      <Route
+        path={`${match.url}/:roleId`}
+        component={() => (
+          <RoleContainer history={history} match={match} />
+        )}
+      />
     </Switch>
   </div>
 );
 
 Roles.propTypes = {
-  addRole: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   rolesList: PropTypes.object.isRequired,
+  addRole: PropTypes.func.isRequired,
+  editRole: PropTypes.func.isRequired,
 };
 
 export default Roles;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Roles from './Roles';
-import { addRole } from '../../redux/modules/roleActions';
+import { addRole, editRole } from '../../redux/modules/roleActions';
 import { fetchRoles } from '../../redux/modules/rolesListActions';
 
 class RolesContainer extends Component {
@@ -19,7 +19,9 @@ class RolesContainer extends Component {
     return (
       <div>
         <Roles
+          history={this.props.history}
           addRole={this.props.addRole}
+          editRole={this.props.editRole}
           match={this.props.match}
           rolesList={this.props.rolesList}
         />
@@ -29,9 +31,11 @@ class RolesContainer extends Component {
 }
 
 RolesContainer.propTypes = {
-  addRole: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   fetchRoles: PropTypes.func.isRequired,
+  addRole: PropTypes.func.isRequired,
+  editRole: PropTypes.func.isRequired,
   rolesList: PropTypes.object.isRequired,
 };
 
@@ -45,6 +49,9 @@ const mapDispatchToProps = dispatch => ({
   },
   addRole: () => {
     dispatch(addRole());
+  },
+  editRole: (id) => {
+    dispatch(editRole(id));
   },
 });
 

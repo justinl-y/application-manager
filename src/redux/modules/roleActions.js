@@ -2,13 +2,19 @@ import { loadingResource, doneLoading } from './isLoadingActions';
 import roleApi from '../../services/api/role';
 
 export const LOAD_ROLE = 'LOAD_ROLE';
+export const UNLOAD_ROLE = 'UNLOAD_ROLE';
 export const ADD_ROLE = 'ADD_ROLE';
 export const EDIT_ROLE = 'EDIT_ROLE';
 export const DELETE_ROLE = 'DELETE_ROLE';
 
-export const loadRole = id => ({
+export const loadRole = data => ({
   type: LOAD_ROLE,
-  payload: id,
+  payload: data,
+});
+
+export const unloadRole = () => ({
+  type: UNLOAD_ROLE,
+  payload: null,
 });
 
 export const addRole = data => ({
@@ -16,9 +22,9 @@ export const addRole = data => ({
   payload: data,
 });
 
-export const editRole = data => ({
+export const editRole = id => ({
   type: EDIT_ROLE,
-  payload: data,
+  payload: id,
 });
 
 export const deleteRole = id => ({
