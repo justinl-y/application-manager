@@ -5,7 +5,7 @@ export const LOAD_ROLE = 'LOAD_ROLE';
 export const UNLOAD_ROLE = 'UNLOAD_ROLE';
 export const ADD_ROLE = 'ADD_ROLE';
 export const EDIT_ROLE = 'EDIT_ROLE';
-export const DELETE_ROLE = 'DELETE_ROLE';
+export const REMOVE_ROLE = 'REMOVE_ROLE';
 
 export const loadRole = data => ({
   type: LOAD_ROLE,
@@ -27,8 +27,8 @@ export const editRole = id => ({
   payload: id,
 });
 
-export const deleteRole = id => ({
-  type: DELETE_ROLE,
+export const removeRole = id => ({
+  type: REMOVE_ROLE,
   payload: id,
 });
 
@@ -57,6 +57,16 @@ export const updateRole = role => (dispatch) => {
   roleApi.edit(role)
       .then((result) => {
         dispatch(editRole(result));
+        // dispatch(doneLoading());
+      })
+      .catch(error => console.log(error));
+};
+
+export const deleteRole = id => (dispatch) => {
+  // dispatch(loadingResource());
+  roleApi.delete(id)
+      .then((result) => {
+        dispatch(removeRole(result));
         // dispatch(doneLoading());
       })
       .catch(error => console.log(error));

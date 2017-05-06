@@ -53,6 +53,35 @@ class Role extends Component {
   "dateApplied": "datetime",
   "notes": "string"*/
 
+  componentWillMount() {
+    if (!this.props.isNew) {
+      this.addRoleToState(this.props.role);
+    }
+  }
+
+  addRoleToState(role) {
+    console.log(role);
+
+    this.setState({
+      fields: {},
+    });
+
+    const fields = {};
+
+    fields.id = role.id;
+    fields.referenceNumber = role.referenceNumber;
+    fields.roleTitle = role.roleTitle;
+    fields.roleType = role.roleType;
+    fields.hiringCompany = role.hiringCompany;
+    fields.description = role.description;
+    fields.website = role.website;
+    // fields.datePosted = new Date(role.datePosted);
+    // fields.dateApplied = new Date(role.dateApplied);
+    fields.notes = role.notes;
+
+    this.setState({ fields });
+  }
+
   roleTypeItems() {
     const items = Object.entries(this.props.roleTypes).map(item => (
       <MenuItem
@@ -137,9 +166,24 @@ class Role extends Component {
 
     if (Object.keys(fieldErrors).length) return;
 
-    console.log(data);
+    // console.log(data);
 
-    this.props.saveRole(data);
+    const roleData = {
+      id: data.id,
+      referenceNumber: data.referenceNumber,
+      roleTitle: data.roleTitle,
+      roleType: data.roleType,
+      hiringCompany: data.hiringCompany,
+      description: data.description,
+      website: data.website,
+      datePosted: data.datePosted.toString(),
+      // fields.dateApplied = new Date(role.dateApplied);
+      notes: data.notes,
+    };
+
+    // console.log(roleData);
+
+    this.props.saveRole(roleData);
     this.props.history.push(`${this.props.match.url}`);
   }
 
@@ -214,6 +258,7 @@ class Role extends Component {
                       floatingLabelText="Description"
                       value={this.state.fields.description || ''}
                       multiLine
+                      rows={20}
                       onChange={e => this.handleTextFieldChange(e, ['req'])}
                     />
 
@@ -264,6 +309,7 @@ class Role extends Component {
                       floatingLabelText="Notes"
                       value={this.state.fields.notes || ''}
                       multiLine
+                      rows={20}
                       onChange={e => this.handleTextFieldChange(e)}
                     />
                   </Tab>
@@ -293,7 +339,9 @@ Role.propTypes = {
   title: PropTypes.string.isRequired,
   roleTypes: PropTypes.object.isRequired,
   saveRole: PropTypes.func.isRequired,
-  unloadRole: PropTypes.func.isRequired,
+  // unloadRole: PropTypes.func.isRequired,
+  isNew: PropTypes.bool.isRequired,
+  role: PropTypes.object.isRequired,
 };
 
 export default Role;

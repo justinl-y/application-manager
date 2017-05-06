@@ -25,8 +25,18 @@ const editRole = data => api.set(`/roles/${data.id}`, data)
       console.log(err)
     ));
 
+const deleteRole = data => api.set(`/roles/${data.id}`, null)
+    .then(() => (
+      'Role deleted.'
+    ))
+    .catch(err => (
+      // `The following error has occured: ${err}`
+      console.log(err)
+    ));
+
 export default {
   get: getRole,
   add: addRole,
   edit: editRole,
+  delete: deleteRole,
 };

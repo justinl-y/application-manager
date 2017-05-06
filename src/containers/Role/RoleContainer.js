@@ -15,7 +15,7 @@ class RoleContainer extends Component {
   }
 
   componentWillUnmount() {
-    console.log('unmount');
+    // console.log('unmount');
     // this.props.unloadRole();
   }
 
@@ -25,11 +25,12 @@ class RoleContainer extends Component {
         <Role
           history={this.props.history}
           match={this.props.match}
+          isNew={this.props.isNew}
           title={this.props.isNew ? 'Add New Role' : 'Edit Role'}
           roleTypes={this.props.roleTypes}
           role={this.props.role}
           saveRole={this.props.isNew ? this.props.insertRole : this.props.updateRole}
-          unloadRole={this.props.unloadRole}
+          // unloadRole={this.props.unloadRole}
         />
       </div>
     );

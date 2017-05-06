@@ -4,6 +4,7 @@ import {
   ADD_ROLE,
   EDIT_ROLE,
   SAVE_ROLE,
+  REMOVE_ROLE,
 } from './roleActions';
 
 const initialState = {};
@@ -24,6 +25,8 @@ const roleReducer = (state = initialState, action) => {
         id: action.payload.id,
         message: action.payload.message,
       };
+    case REMOVE_ROLE:
+      return state;
     default:
       return state;
   }

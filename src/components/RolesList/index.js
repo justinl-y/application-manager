@@ -79,6 +79,7 @@ RolesList.propTypes = {
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   rolesList: PropTypes.object.isRequired,
+  editRole: PropTypes.func.isRequired,
 };
 
 export default RolesList;
