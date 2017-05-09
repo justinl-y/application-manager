@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import Moment from 'moment';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Card, CardText } from 'material-ui/Card';
@@ -30,29 +30,6 @@ class Role extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  /* "referenceNumber": "string",
-  "title": "string",
-  "company": "string",
-  "description": "text",
-  "locationId": {
-    "name": "string"
-  },
-  "employmentTypeId": {
-    "name": "string"
-  },
-  "website": "string",
-  "datePosted": "datetime",
-
-  "contactId": {
-    "firstName": "string",
-    "lastName": "string",
-    "telephoneNumber": "string",
-    "emailAddress": "string"
-  },
-
-  "dateApplied": "datetime",
-  "notes": "string"*/
-
   componentWillMount() {
     if (!this.props.isNew) {
       this.addRoleToState(this.props.role);
@@ -60,11 +37,35 @@ class Role extends Component {
   }
 
   addRoleToState(role) {
-    console.log(role);
-
     this.setState({
       fields: {},
     });
+
+    /*
+    "referenceNumber": "string",
+    "title": "string",
+    "company": "string",
+    "description": "text",
+    "locationId": {
+      "name": "string"
+    },
+    "roleTypeId": {
+      "name": "string"
+    },
+    "website": "string",
+    "datePosted": "datetime",
+
+    "contactId": {
+      "agencyName": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "telephoneNumber": "string",
+      "emailAddress": "string"
+    },
+
+    "dateApplied": "datetime",
+    "notes": "string"
+    */
 
     const fields = {};
 
@@ -73,10 +74,24 @@ class Role extends Component {
     fields.roleTitle = role.roleTitle;
     fields.roleType = role.roleType;
     fields.hiringCompany = role.hiringCompany;
+    fields.location = role.location;
     fields.description = role.description;
     fields.website = role.website;
-    // fields.datePosted = new Date(role.datePosted);
-    // fields.dateApplied = new Date(role.dateApplied);
+
+    if (role.datePosted) {
+      fields.datePosted = new Date(role.datePosted);
+    }
+
+    fields.agencyName = role.agencyName;
+    fields.firstName = role.firstName;
+    fields.lastName = role.lastName;
+    fields.telephoneNumber = role.telephoneNumber;
+    fields.email = role.email;
+
+    if (role.dateApplied) {
+      fields.dateApplied = new Date(role.dateApplied);
+    }
+
     fields.notes = role.notes;
 
     this.setState({ fields });
@@ -92,6 +107,36 @@ class Role extends Component {
     ));
 
     return items;
+  }
+
+  locationItems() {
+    const items = Object.entries(this.props.locations).map(item => (
+      <MenuItem
+        key={Math.random() * Date.now()}
+        value={item[0]}
+        primaryText={item[1]}
+      />
+    ));
+
+    return items;
+  }
+
+  validate(data) {
+    this.setState({
+      fieldErrors: {},
+    });
+
+    const errors = {};
+    // TODO date comparison
+    // TODO validation errors into central source
+    // TODO data formats
+
+    if (!data.roleTitle) errors.roleTitle = 'Required field';
+    if (!data.hiringCompany) errors.hiringCompany = 'Required field';
+    if (!data.description) errors.description = 'Required field';
+    // if (!data.datePosted) errors.datePosted = 'Required field';
+
+    return errors;
   }
 
   handleTextFieldChange(e, validation) {
@@ -134,26 +179,10 @@ class Role extends Component {
     fields[e.target.name] = e.target.value;
   }*/
 
-  validate(data) {
-    this.setState({
-      fieldErrors: {},
-    });
-
-    const errors = {};
-    // TODO date comparison
-    // TODO validation errors into central source
-    // TODO data formats
-
-    if (!data.roleTitle) errors.roleTitle = 'Required field';
-    if (!data.hiringCompany) errors.hiringCompany = 'Required field';
-    if (!data.description) errors.description = 'Required field';
-    // if (!data.datePosted) errors.datePosted = 'Required field';
-
-    return errors;
-  }
-
   // for cancel
   handleCancel() {
+    this.props.unloadRole();
+
     this.props.history.push(`${this.props.match.url}`);
   }
 
@@ -168,18 +197,27 @@ class Role extends Component {
 
     // console.log(data);
 
-    const roleData = {
-      id: data.id,
-      referenceNumber: data.referenceNumber,
+    const roleContent = {
+      referenceNumber: data.referenceNumber || null,
       roleTitle: data.roleTitle,
       roleType: data.roleType,
       hiringCompany: data.hiringCompany,
+      location: data.location || null,
       description: data.description,
-      website: data.website,
-      datePosted: data.datePosted.toString(),
-      // fields.dateApplied = new Date(role.dateApplied);
-      notes: data.notes,
+      website: data.website || null,
+      datePosted: Moment(data.datePosted).valueOf() || null,
+
+      agencyName: data.agencyName || null,
+      firstName: data.firstName || null,
+      lastName: data.lastName || null,
+      telephoneNumber: data.telephoneNumber || null,
+      email: data.email || null,
+
+      dateApplied: Moment(data.dateApplied).valueOf() || null,
+      notes: data.notes || null,
     };
+
+    const roleData = this.props.isNew ? roleContent : { ...roleContent, id: data.id };
 
     // console.log(roleData);
 
@@ -200,12 +238,14 @@ class Role extends Component {
       },
     };
 
+    const title = this.props.isNew ? 'Add New Role' : 'Edit Role';
+
     return (
       <div className={styles.content}>
         <Card style={style.card} >
           <Paper>
             <Toolbar>
-              <ToolbarTitle text={this.props.title} />
+              <ToolbarTitle text={title} />
             </Toolbar>
             <CardText>
               <form>
@@ -250,6 +290,18 @@ class Role extends Component {
                       value={this.state.fields.hiringCompany || ''}
                       onChange={e => this.handleTextFieldChange(e, ['req'])}
                     />
+
+                    <SelectField
+                      style={style.selectField}
+                      hintText="Location"
+                      floatingLabelText="Location"
+                      value={this.state.fields.location}
+                      onChange={(e, i, v) => { this.setState({ fields: { ...this.state.fields, location: v } }); }}
+                      // onChange={(e, i, v) => this.handleSelectFieldChange(e, i, v, ['req'])}
+                    >
+                      {this.locationItems()}
+                    </SelectField>
+
                     <TextField
                       style={style.textField}
                       name="description"
@@ -262,8 +314,6 @@ class Role extends Component {
                       onChange={e => this.handleTextFieldChange(e, ['req'])}
                     />
 
-                    { /* location */ }
-
                     <TextField
                       style={style.textField}
                       name="website"
@@ -273,6 +323,7 @@ class Role extends Component {
                       value={this.state.fields.website || ''}
                       onChange={e => this.handleTextFieldChange(e)}
                     />
+
                     <DatePicker
                       textFieldStyle={{ width: '100%' }}
                       floatingLabelText="Date Posted"
@@ -286,7 +337,51 @@ class Role extends Component {
                   </Tab>
 
                   <Tab label="Contact">
-                    { /* contact */ }
+                    <TextField
+                      style={style.textField}
+                      name="agencyName"
+                      hintText="Agency"
+                      errorText={this.state.fieldErrors.agencyName}
+                      floatingLabelText="Agency"
+                      value={this.state.fields.agencyName || ''}
+                      onChange={e => this.handleTextFieldChange(e)}
+                    />
+                    <TextField
+                      style={style.textField}
+                      name="firstName"
+                      hintText="First Name"
+                      errorText={this.state.fieldErrors.firstName}
+                      floatingLabelText="First Name"
+                      value={this.state.fields.firstName || ''}
+                      onChange={e => this.handleTextFieldChange(e)}
+                    />
+                    <TextField
+                      style={style.textField}
+                      name="lastName"
+                      hintText="Last Name"
+                      errorText={this.state.fieldErrors.lastName}
+                      floatingLabelText="Last Name"
+                      value={this.state.fields.lastName || ''}
+                      onChange={e => this.handleTextFieldChange(e)}
+                    />
+                    <TextField
+                      style={style.textField}
+                      name="telephoneNumber"
+                      hintText="Telephone Number"
+                      errorText={this.state.fieldErrors.telephoneNumber}
+                      floatingLabelText="Telephone Number"
+                      value={this.state.fields.telephoneNumber || ''}
+                      onChange={e => this.handleTextFieldChange(e)}
+                    />
+                    <TextField
+                      style={style.textField}
+                      name="email"
+                      hintText="Email"
+                      errorText={this.state.fieldErrors.email}
+                      floatingLabelText="Email"
+                      value={this.state.fields.email || ''}
+                      onChange={e => this.handleTextFieldChange(e)}
+                    />
                   </Tab>
 
                   <Tab label="History" >
@@ -336,12 +431,12 @@ class Role extends Component {
 Role.propTypes = {
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
-  roleTypes: PropTypes.object.isRequired,
-  saveRole: PropTypes.func.isRequired,
-  // unloadRole: PropTypes.func.isRequired,
   isNew: PropTypes.bool.isRequired,
+  roleTypes: PropTypes.object.isRequired,
+  locations: PropTypes.object.isRequired,
   role: PropTypes.object.isRequired,
+  saveRole: PropTypes.func.isRequired,
+  unloadRole: PropTypes.func.isRequired,
 };
 
 export default Role;

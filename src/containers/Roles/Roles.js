@@ -15,7 +15,7 @@ const style = {
   marginBottom: 25,
 };
 
-const Roles = ({ history, match, rolesList, addRole, editRole }) => (
+const Roles = ({ history, match, rolesList, addRole, editRole, deleteRole }) => (
   <div>
     <NavbarMain />
 
@@ -39,7 +39,13 @@ const Roles = ({ history, match, rolesList, addRole, editRole }) => (
       <Route
         path={`${match.url}/list`}
         component={() => (
-          <RolesList history={history} match={match} rolesList={rolesList} editRole={editRole} />
+          <RolesList
+            history={history}
+            match={match}
+            rolesList={rolesList}
+            editRole={editRole}
+            deleteRole={deleteRole}
+          />
         )}
       />
       <Route
@@ -64,6 +70,7 @@ Roles.propTypes = {
   rolesList: PropTypes.object.isRequired,
   addRole: PropTypes.func.isRequired,
   editRole: PropTypes.func.isRequired,
+  deleteRole: PropTypes.func.isRequired,
 };
 
 export default Roles;
