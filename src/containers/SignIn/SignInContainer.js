@@ -12,14 +12,15 @@ const SignInContainer = props => (
   />
 );
 
+SignInContainer.defaultProps = {
+  userSignedIn: false,
+};
+
+
 SignInContainer.propTypes = {
   signInUser: PropTypes.func.isRequired,
   userSignedIn: PropTypes.bool,
   history: PropTypes.object.isRequired,
-};
-
-SignInContainer.defaultProps = {
-  userSignedIn: false,
 };
 
 const mapStateToProps = state => ({

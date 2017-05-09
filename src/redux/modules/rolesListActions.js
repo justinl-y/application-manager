@@ -8,9 +8,9 @@ export const loadRoles = data => ({
   payload: data,
 });
 
-export const fetchRoles = () => (dispatch) => {
+export const fetchRoles = userId => (dispatch) => {
   dispatch(loadingResource());
-  rolesListApi.get()
+  rolesListApi.get(userId)
       .then((result) => {
         dispatch(loadRoles(result));
         dispatch(doneLoading());

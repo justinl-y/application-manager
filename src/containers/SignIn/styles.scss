@@ -3,9 +3,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-} 
+}
 
-.sign-in-button {
-    background-color: 'green';
-    color: 'white';
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
 }

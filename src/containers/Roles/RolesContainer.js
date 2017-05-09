@@ -10,34 +10,36 @@ class RolesContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.proccessDeleteRole = this.proccessDeleteRole.bind(this);
+    this.fetchRolesWithUserId = this.fetchRolesWithUserId.bind(this);
+    this.deleteRoleWithUserId = this.deleteRoleWithUserId.bind(this);
   }
 
   componentWillMount() {
-    this.props.fetchRoles();
+    this.fetchRolesWithUserId();
   }
 
-  newRole() {
-    this.props.addRole();
+  fetchRolesWithUserId() {
+    const { userId } = this.props;
+    this.props.fetchRoles(userId);
   }
 
-  proccessDeleteRole(id) {
-    this.props.deleteRole(id);
-    this.props.fetchRoles();
+  deleteRoleWithUserId(itemId) {
+    const { userId } = this.props;
+
+    this.props.deleteRole({ userId, itemId });
+    this.fetchRolesWithUserId(userId);
   }
 
   render() {
     return (
-      <div>
-        <Roles
-          history={this.props.history}
-          match={this.props.match}
-          addRole={this.props.addRole}
-          editRole={this.props.editRole}
-          deleteRole={this.proccessDeleteRole}
-          rolesList={this.props.rolesList}
-        />
-      </div>
+      <Roles
+        history={this.props.history}
+        match={this.props.match}
+        addRole={this.props.addRole}
+        editRole={this.props.editRole}
+        deleteRole={this.deleteRoleWithUserId}
+        rolesList={this.props.rolesList}
+      />
     );
   }
 }
@@ -45,6 +47,7 @@ class RolesContainer extends Component {
 RolesContainer.propTypes = {
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  userId: PropTypes.string.isRequired,
   fetchRoles: PropTypes.func.isRequired,
   addRole: PropTypes.func.isRequired,
   editRole: PropTypes.func.isRequired,
@@ -53,12 +56,13 @@ RolesContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  userId: state.userAuthentication.uId,
   rolesList: state.rolesList,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchRoles: () => {
-    dispatch(fetchRoles());
+  fetchRoles: (userId) => {
+    dispatch(fetchRoles(userId));
   },
   addRole: () => {
     dispatch(addRole());
@@ -66,8 +70,8 @@ const mapDispatchToProps = dispatch => ({
   editRole: (id) => {
     dispatch(editRole(id));
   },
-  deleteRole: (id) => {
-    dispatch(deleteRole(id));
+  deleteRole: (data) => {
+    dispatch(deleteRole(data));
   },
 });
 

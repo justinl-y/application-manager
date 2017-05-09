@@ -17,9 +17,9 @@ export const unloadRole = () => ({
   payload: null,
 });
 
-export const addRole = data => ({
+export const addRole = () => ({
   type: ADD_ROLE,
-  payload: data,
+  payload: null,
 });
 
 export const editRole = id => ({
@@ -32,9 +32,9 @@ export const removeRole = id => ({
   payload: id,
 });
 
-export const fetchRole = id => (dispatch) => {
+export const fetchRole = data => (dispatch) => {
   dispatch(loadingResource());
-  roleApi.get(id)
+  roleApi.get(data)
       .then((result) => {
         dispatch(loadRole(result));
         dispatch(doneLoading());
@@ -42,9 +42,9 @@ export const fetchRole = id => (dispatch) => {
       .catch(error => console.log(error));
 };
 
-export const insertRole = role => (dispatch) => {
+export const insertRole = data => (dispatch) => {
   // dispatch(loadingResource());
-  roleApi.add(role)
+  roleApi.add(data)
       .then((result) => {
         dispatch(addRole(result));
         // dispatch(doneLoading());
@@ -52,9 +52,9 @@ export const insertRole = role => (dispatch) => {
       .catch(error => console.log(error));
 };
 
-export const updateRole = role => (dispatch) => {
+export const updateRole = data => (dispatch) => {
   // dispatch(loadingResource());
-  roleApi.edit(role)
+  roleApi.edit(data)
       .then((result) => {
         dispatch(editRole(result));
         // dispatch(doneLoading());
@@ -62,9 +62,9 @@ export const updateRole = role => (dispatch) => {
       .catch(error => console.log(error));
 };
 
-export const deleteRole = id => (dispatch) => {
+export const deleteRole = data => (dispatch) => {
   // dispatch(loadingResource());
-  roleApi.delete(id)
+  roleApi.delete(data)
       .then((result) => {
         dispatch(removeRole(result));
         // dispatch(doneLoading());

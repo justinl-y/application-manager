@@ -81,6 +81,10 @@ class SignIn extends Gandalf {
       card: {
         width: '500px',
       },
+      button: {
+        width: '100px',
+        marginLeft: '20px',
+      },
     };
 
     return (
@@ -94,16 +98,20 @@ class SignIn extends Gandalf {
               <form>
                 { fields.email.element }
                 { fields.password.element }
-                <FlatButton
-                  onClick={this.handleSignUp}
-                  label="Sign-Up"
-                />
-                <RaisedButton
-                  backgroundColor={colors.cyan500}
-                  labelColor={colors.white}
-                  onClick={this.handleSignIn}
-                  label="Sign-In"
-                />
+                <div className={styles['form-buttons']}>
+                  <FlatButton
+                    onClick={this.handleSignUp}
+                    label="Sign-Up"
+                    style={style.button}
+                  />
+                  <RaisedButton
+                    backgroundColor={colors.cyan500}
+                    labelColor={colors.white}
+                    onClick={this.handleSignIn}
+                    label="Sign-In"
+                    style={style.button}
+                  />
+                </div>
               </form>
             </CardText>
           </Paper>

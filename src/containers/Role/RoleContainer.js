@@ -1,19 +1,42 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Loading from '../../components/Loading';
 import Role from './Role';
 import { fetchRoleTypes } from '../../redux/modules/roleTypeActions';
 import { unloadRole, fetchRole, insertRole, updateRole } from '../../redux/modules/roleActions';
 import { fetchLocations } from '../../redux/modules/locationActions';
 
 class RoleContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.insertRoleWithUserId = this.insertRoleWithUserId.bind(this);
+    this.updateRoleWithUserId = this.updateRoleWithUserId.bind(this);
+  }
+
   componentWillMount() {
     if (!this.props.isNew) {
-      this.props.fetchRole(this.props.roleId);
+      this.fetchRoleWithUserId(this.props.roleId);
     }
 
     this.props.fetchRoleTypes();
     this.props.fetchLocations();
+  }
+
+  fetchRoleWithUserId(itemId) {
+    const { userId } = this.props;
+    this.props.fetchRole({ userId, itemId });
+  }
+
+  insertRoleWithUserId(item) {
+    const { userId } = this.props;
+    this.props.insertRole({ ...item, userId });
+  }
+
+  updateRoleWithUserId(item) {
+    const { userId } = this.props;
+    this.props.updateRole({ ...item, userId });
   }
 
   render() {
@@ -23,7 +46,7 @@ class RoleContainer extends Component {
       <div>
         {
           isLoading ?
-            <p>Loading...</p>
+            <Loading />
           :
             <Role
               history={this.props.history}
@@ -32,7 +55,7 @@ class RoleContainer extends Component {
               roleTypes={this.props.roleTypes}
               locations={this.props.locations}
               role={this.props.role}
-              saveRole={this.props.isNew ? this.props.insertRole : this.props.updateRole}
+              saveRole={this.props.isNew ? this.insertRoleWithUserId : this.updateRoleWithUserId}
               unloadRole={this.props.unloadRole}
             />
         }
@@ -60,10 +83,12 @@ RoleContainer.propTypes = {
   locations: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   unloadRole: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
   isNew: state.role.isNew,
+  userId: state.userAuthentication.uId,
   roleId: state.role.id,
   role: state.role,
   roleTypes: state.roleTypes,

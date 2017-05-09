@@ -3,3 +3,14 @@
     justify-content: center;
     margin-top: 25px;
 }
+
+.panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+}

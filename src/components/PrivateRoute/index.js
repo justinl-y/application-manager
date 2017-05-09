@@ -19,8 +19,8 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  // userSignedIn: state.userAuthentication.signedIn.signIn,
-  userSignedIn: true,
+  userSignedIn: state.userAuthentication.signedIn.signIn,
+  // userSignedIn: true,
 });
 
 export default connect(

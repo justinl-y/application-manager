@@ -31,41 +31,29 @@ class Role extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.isNew) {
+    if (this.props.isNew) {
+      this.setDefaultRoletoState();
+    } else {
       this.addRoleToState(this.props.role);
     }
+  }
+
+  setDefaultRoletoState() {
+    this.setState({
+      fields: {},
+    });
+
+    const fields = {};
+
+    fields.datePosted = new Date(Date.now());
+
+    this.setState({ fields });
   }
 
   addRoleToState(role) {
     this.setState({
       fields: {},
     });
-
-    /*
-    "referenceNumber": "string",
-    "title": "string",
-    "company": "string",
-    "description": "text",
-    "locationId": {
-      "name": "string"
-    },
-    "roleTypeId": {
-      "name": "string"
-    },
-    "website": "string",
-    "datePosted": "datetime",
-
-    "contactId": {
-      "agencyName": "string",
-      "firstName": "string",
-      "lastName": "string",
-      "telephoneNumber": "string",
-      "emailAddress": "string"
-    },
-
-    "dateApplied": "datetime",
-    "notes": "string"
-    */
 
     const fields = {};
 
@@ -217,7 +205,7 @@ class Role extends Component {
       notes: data.notes || null,
     };
 
-    const roleData = this.props.isNew ? roleContent : { ...roleContent, id: data.id };
+    const roleData = this.props.isNew ? roleContent : { ...roleContent, itemId: data.id };
 
     // console.log(roleData);
 
@@ -228,13 +216,20 @@ class Role extends Component {
   render() {
     const style = {
       card: {
-        width: '500px',
+        width: '1000px',
+      },
+      cardText: {
+        width: '450px',
       },
       textField: {
         width: '100%',
       },
       selectField: {
         width: '100%',
+      },
+      button: {
+        width: '100px',
+        marginLeft: '20px',
       },
     };
 
@@ -251,174 +246,191 @@ class Role extends Component {
               <form>
                 <Tabs>
                   <Tab label="Role Details" >
-                    <TextField
-                      style={style.textField}
-                      name="referenceNumber"
-                      hintText="Reference Number"
-                      errorText={this.state.fieldErrors.referenceNumber}
-                      floatingLabelText="Reference Number"
-                      value={this.state.fields.referenceNumber || ''}
-                      onChange={e => this.handleTextFieldChange(e)}
-                    />
-                    <TextField
-                      style={style.textField}
-                      name="roleTitle"
-                      hintText="Role Title"
-                      errorText={this.state.fieldErrors.roleTitle}
-                      floatingLabelText="Role Title"
-                      value={this.state.fields.roleTitle || ''}
-                      onChange={e => this.handleTextFieldChange(e, ['req'])}
-                    />
+                    <div className={styles.panel}>
+                      <CardText style={style.cardText}>
+                        <SelectField
+                          style={style.selectField}
+                          hintText="Role Type"
+                          floatingLabelText="Role Type"
+                          value={this.state.fields.roleType}
+                          onChange={(e, i, v) => { this.setState({ fields: { ...this.state.fields, roleType: v } }); }}
+                        >
+                          {this.roleTypeItems()}
+                        </SelectField>
 
-                    <SelectField
-                      style={style.selectField}
-                      hintText="Role Type"
-                      floatingLabelText="Role Type"
-                      value={this.state.fields.roleType}
-                      onChange={(e, i, v) => { this.setState({ fields: { ...this.state.fields, roleType: v } }); }}
-                      // onChange={(e, i, v) => this.handleSelectFieldChange(e, i, v, ['req'])}
-                    >
-                      {this.roleTypeItems()}
-                    </SelectField>
+                        <TextField
+                          style={style.textField}
+                          name="referenceNumber"
+                          hintText="Reference Number"
+                          errorText={this.state.fieldErrors.referenceNumber}
+                          floatingLabelText="Reference Number"
+                          value={this.state.fields.referenceNumber || ''}
+                          onChange={e => this.handleTextFieldChange(e)}
+                        />
 
-                    <TextField
-                      style={style.textField}
-                      name="hiringCompany"
-                      hintText="Hiring Company"
-                      errorText={this.state.fieldErrors.hiringCompany}
-                      floatingLabelText="Hiring Company"
-                      value={this.state.fields.hiringCompany || ''}
-                      onChange={e => this.handleTextFieldChange(e, ['req'])}
-                    />
+                        <TextField
+                          style={style.textField}
+                          name="roleTitle"
+                          hintText="Role Title"
+                          errorText={this.state.fieldErrors.roleTitle}
+                          floatingLabelText="Role Title"
+                          value={this.state.fields.roleTitle || ''}
+                          onChange={e => this.handleTextFieldChange(e, ['req'])}
+                        />
 
-                    <SelectField
-                      style={style.selectField}
-                      hintText="Location"
-                      floatingLabelText="Location"
-                      value={this.state.fields.location}
-                      onChange={(e, i, v) => { this.setState({ fields: { ...this.state.fields, location: v } }); }}
-                      // onChange={(e, i, v) => this.handleSelectFieldChange(e, i, v, ['req'])}
-                    >
-                      {this.locationItems()}
-                    </SelectField>
+                        <TextField
+                          style={style.textField}
+                          name="hiringCompany"
+                          hintText="Hiring Company"
+                          errorText={this.state.fieldErrors.hiringCompany}
+                          floatingLabelText="Hiring Company"
+                          value={this.state.fields.hiringCompany || ''}
+                          onChange={e => this.handleTextFieldChange(e, ['req'])}
+                        />
 
-                    <TextField
-                      style={style.textField}
-                      name="description"
-                      hintText="Description"
-                      errorText={this.state.fieldErrors.description}
-                      floatingLabelText="Description"
-                      value={this.state.fields.description || ''}
-                      multiLine
-                      rows={20}
-                      onChange={e => this.handleTextFieldChange(e, ['req'])}
-                    />
+                        <SelectField
+                          style={style.selectField}
+                          hintText="Location"
+                          floatingLabelText="Location"
+                          value={this.state.fields.location}
+                          onChange={(e, i, v) => { this.setState({ fields: { ...this.state.fields, location: v } }); }}
+                        >
+                          {this.locationItems()}
+                        </SelectField>
 
-                    <TextField
-                      style={style.textField}
-                      name="website"
-                      hintText="Website"
-                      errorText={this.state.fieldErrors.website}
-                      floatingLabelText="Website"
-                      value={this.state.fields.website || ''}
-                      onChange={e => this.handleTextFieldChange(e)}
-                    />
+                        <TextField
+                          style={style.textField}
+                          name="website"
+                          hintText="Website"
+                          errorText={this.state.fieldErrors.website}
+                          floatingLabelText="Website"
+                          value={this.state.fields.website || ''}
+                          onChange={e => this.handleTextFieldChange(e)}
+                        />
 
-                    <DatePicker
-                      textFieldStyle={{ width: '100%' }}
-                      floatingLabelText="Date Posted"
-                      errorText={this.state.fieldErrors.datePosted}
-                      hintText="Date Posted"
-                      container="inline"
-                      autoOk
-                      value={this.state.fields.datePosted}
-                      onChange={(x, d) => { this.setState({ fields: { ...this.state.fields, datePosted: d } }); }}
-                    />
+                        <DatePicker
+                          textFieldStyle={{ width: '100%' }}
+                          floatingLabelText="Date Posted"
+                          errorText={this.state.fieldErrors.datePosted}
+                          hintText="Date Posted"
+                          container="inline"
+                          autoOk
+                          value={this.state.fields.datePosted}
+                          onChange={(x, d) => { this.setState({ fields: { ...this.state.fields, datePosted: d } }); }}
+                        />
+                      </CardText>
+
+                      <CardText style={style.cardText}>
+                        <TextField
+                          style={style.textField}
+                          name="description"
+                          hintText="Description"
+                          errorText={this.state.fieldErrors.description}
+                          floatingLabelText="Description"
+                          value={this.state.fields.description || ''}
+                          multiLine
+                          rows={19}
+                          onChange={e => this.handleTextFieldChange(e, ['req'])}
+                        />
+                      </CardText>
+                    </div>
                   </Tab>
 
                   <Tab label="Contact">
-                    <TextField
-                      style={style.textField}
-                      name="agencyName"
-                      hintText="Agency"
-                      errorText={this.state.fieldErrors.agencyName}
-                      floatingLabelText="Agency"
-                      value={this.state.fields.agencyName || ''}
-                      onChange={e => this.handleTextFieldChange(e)}
-                    />
-                    <TextField
-                      style={style.textField}
-                      name="firstName"
-                      hintText="First Name"
-                      errorText={this.state.fieldErrors.firstName}
-                      floatingLabelText="First Name"
-                      value={this.state.fields.firstName || ''}
-                      onChange={e => this.handleTextFieldChange(e)}
-                    />
-                    <TextField
-                      style={style.textField}
-                      name="lastName"
-                      hintText="Last Name"
-                      errorText={this.state.fieldErrors.lastName}
-                      floatingLabelText="Last Name"
-                      value={this.state.fields.lastName || ''}
-                      onChange={e => this.handleTextFieldChange(e)}
-                    />
-                    <TextField
-                      style={style.textField}
-                      name="telephoneNumber"
-                      hintText="Telephone Number"
-                      errorText={this.state.fieldErrors.telephoneNumber}
-                      floatingLabelText="Telephone Number"
-                      value={this.state.fields.telephoneNumber || ''}
-                      onChange={e => this.handleTextFieldChange(e)}
-                    />
-                    <TextField
-                      style={style.textField}
-                      name="email"
-                      hintText="Email"
-                      errorText={this.state.fieldErrors.email}
-                      floatingLabelText="Email"
-                      value={this.state.fields.email || ''}
-                      onChange={e => this.handleTextFieldChange(e)}
-                    />
+                    <CardText>
+                      <TextField
+                        style={style.textField}
+                        name="agencyName"
+                        hintText="Agency"
+                        errorText={this.state.fieldErrors.agencyName}
+                        floatingLabelText="Agency"
+                        value={this.state.fields.agencyName || ''}
+                        onChange={e => this.handleTextFieldChange(e)}
+                      />
+                      <TextField
+                        style={style.textField}
+                        name="firstName"
+                        hintText="First Name"
+                        errorText={this.state.fieldErrors.firstName}
+                        floatingLabelText="First Name"
+                        value={this.state.fields.firstName || ''}
+                        onChange={e => this.handleTextFieldChange(e)}
+                      />
+                      <TextField
+                        style={style.textField}
+                        name="lastName"
+                        hintText="Last Name"
+                        errorText={this.state.fieldErrors.lastName}
+                        floatingLabelText="Last Name"
+                        value={this.state.fields.lastName || ''}
+                        onChange={e => this.handleTextFieldChange(e)}
+                      />
+                      <TextField
+                        style={style.textField}
+                        name="telephoneNumber"
+                        hintText="Telephone Number"
+                        errorText={this.state.fieldErrors.telephoneNumber}
+                        floatingLabelText="Telephone Number"
+                        value={this.state.fields.telephoneNumber || ''}
+                        onChange={e => this.handleTextFieldChange(e)}
+                      />
+                      <TextField
+                        style={style.textField}
+                        name="email"
+                        hintText="Email"
+                        errorText={this.state.fieldErrors.email}
+                        floatingLabelText="Email"
+                        value={this.state.fields.email || ''}
+                        onChange={e => this.handleTextFieldChange(e)}
+                      />
+                    </CardText>
                   </Tab>
 
                   <Tab label="History" >
-                    <DatePicker
-                      textFieldStyle={{ width: '100%' }}
-                      floatingLabelText="Date Applied"
-                      errorText={this.state.fieldErrors.dateApplied}
-                      hintText="Date Applied"
-                      container="inline"
-                      autoOk
-                      value={this.state.fields.dateApplied}
-                      onChange={(x, d) => { this.setState({ fields: { ...this.state.fields, dateApplied: d } }); }}
-                    />
+                    <div className={styles.panel}>
+                      <CardText style={style.cardText}>
+                        <DatePicker
+                          textFieldStyle={{ width: '100%' }}
+                          floatingLabelText="Date Applied"
+                          errorText={this.state.fieldErrors.dateApplied}
+                          hintText="Date Applied"
+                          container="inline"
+                          autoOk
+                          value={this.state.fields.dateApplied}
+                          onChange={(x, d) => { this.setState({ fields: { ...this.state.fields, dateApplied: d } }); }}
+                        />
+                      </CardText>
 
-                    <TextField
-                      style={style.textField}
-                      name="notes"
-                      hintText="Notes"
-                      errorText={this.state.fieldErrors.notes}
-                      floatingLabelText="Notes"
-                      value={this.state.fields.notes || ''}
-                      multiLine
-                      rows={20}
-                      onChange={e => this.handleTextFieldChange(e)}
-                    />
+                      <CardText style={style.cardText}>
+                        <TextField
+                          style={style.textField}
+                          name="notes"
+                          hintText="Notes"
+                          errorText={this.state.fieldErrors.notes}
+                          floatingLabelText="Notes"
+                          value={this.state.fields.notes || ''}
+                          multiLine
+                          rows={19}
+                          onChange={e => this.handleTextFieldChange(e)}
+                        />
+                      </CardText>
+                    </div>
                   </Tab>
                 </Tabs>
-                <FlatButton
-                  label="Cancel"
-                  onClick={this.handleCancel}
-                />
-                <RaisedButton
-                  backgroundColor={colors.cyan500}
-                  labelColor={colors.white}
-                  onClick={this.handleSubmit}
-                  label="Save"
-                />
+                <div className={styles['form-buttons']}>
+                  <FlatButton
+                    label="Cancel"
+                    onClick={this.handleCancel}
+                    style={style.button}
+                  />
+                  <RaisedButton
+                    backgroundColor={colors.cyan500}
+                    labelColor={colors.white}
+                    onClick={this.handleSubmit}
+                    label="Save"
+                    style={style.button}
+                  />
+                </div>
               </form>
             </CardText>
           </Paper>

@@ -1,7 +1,7 @@
 import api from './base';
 
-const getRole = id => (
-  api.get(`/roles/${id}`)
+const getRole = data => (
+  api.get(`/roles/${data.userId}/${data.itemId}`)
     .then(result => result)
     .catch(err => (
       // `The following error has occured: ${err}`
@@ -10,7 +10,7 @@ const getRole = id => (
 );
 
 const addRole = data => (
-  api.push('/roles', data)
+  api.push(`/roles/${data.userId}`, data)
     .then(() => (
       'Role added.'
     ))
@@ -21,7 +21,7 @@ const addRole = data => (
 );
 
 const editRole = data => (
-  api.set(`/roles/${data.id}`, data)
+  api.set(`/roles/${data.userId}/${data.itemId}`, data)
     .then(() => (
       'Role edited.'
     ))
@@ -31,8 +31,8 @@ const editRole = data => (
     ))
 );
 
-const deleteRole = id => (
-  api.set(`/roles/${id}`, null)
+const deleteRole = data => (
+  api.set(`/roles/${data.userId}/${data.itemId}`, null)
     .then(() => (
       'Role deleted.'
     ))

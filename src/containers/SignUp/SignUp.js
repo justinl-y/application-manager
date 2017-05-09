@@ -105,9 +105,19 @@ class SignUp extends Gandalf {
   render() {
     const fields = this.state.fields;
 
+    const style = {
+      card: {
+        width: '500px',
+      },
+      button: {
+        width: '100px',
+        marginLeft: '20px',
+      },
+    };
+
     return (
-      <div className={styles['sign-up']}>
-        <Card style={{ width: '500px' }} >
+      <div className={styles.content}>
+        <Card style={style.card} >
           <Paper>
             <Toolbar>
               <ToolbarTitle text="Sign-Up" />
@@ -119,18 +129,20 @@ class SignUp extends Gandalf {
                 { fields.email.element }
                 { fields.password.element }
 
-                <FlatButton
-                  onClick={this.handleCancel}
-                  label="Cancel"
-                />
-
-                <RaisedButton
-                  backgroundColor={colors.cyan500}
-                  labelColor={colors.white}
-                  onClick={this.handleSignUp}
-                  label="Sign-Up"
-                />
-
+                <div className={styles['form-buttons']}>
+                  <FlatButton
+                    onClick={this.handleCancel}
+                    label="Cancel"
+                    style={style.button}
+                  />
+                  <RaisedButton
+                    backgroundColor={colors.cyan500}
+                    labelColor={colors.white}
+                    onClick={this.handleSignUp}
+                    label="Sign-Up"
+                    style={style.button}
+                  />
+                </div>
               </form>
             </CardText>
           </Paper>

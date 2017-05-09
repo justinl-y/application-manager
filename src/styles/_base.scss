@@ -1,0 +1,19 @@
+//set variables
+$font-family-base: robotoregular, Helvetica, sans-serif;
+
+$font-size-mobile: 14px;
+$font-size-base: 16px;
+
+/*set base styles*/
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+
+  margin: 0;
+  padding: 0;
+}

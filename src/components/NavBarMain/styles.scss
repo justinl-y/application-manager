@@ -1,0 +1,21 @@
+.nav-bar {
+  display: flex;
+  align-items: center;
+}
+
+.nav-bar li {
+  display: inline;
+}
+
+.nav-item {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-left: 15px;
+  font-weight: bold;
+  color: white;
+}
+
+.selected {
+  font-weight: bold;
+  color: darkslategrey;
+}

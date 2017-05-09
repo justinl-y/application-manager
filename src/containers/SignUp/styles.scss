@@ -1,6 +1,11 @@
-.sign-up {
+.content {
     height: 85vh;
     display: flex;
     justify-content: center;
     align-items: center;
 } 
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
