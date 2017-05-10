@@ -4,5 +4,4 @@ dist
 .vscode
 yarn.lock
 npm-debug.log
-config
 config.json

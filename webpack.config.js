@@ -41,7 +41,7 @@ const config = {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
   },
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-eval-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, './src'),
     historyApiFallback: true,
@@ -87,14 +87,16 @@ const config = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
+        exclude: [/node_modules/],
         use: [
-          'file-loader',
+          'file-loader?name=[path][name].[ext]',
         ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
+        exclude: [/node_modules/],
         use: [
-          'file-loader',
+          'file-loader?name=[path][name].[ext]',
         ],
       },
     ],
@@ -107,6 +109,7 @@ const config = {
 
 if (process.env.NODE_ENV === 'production') {
   config.devtool = ''; // No sourcemap for production
+  config.output.publicPath = './';
 
   // Add more configuration for production here like
   // SASS & CSS loaders
