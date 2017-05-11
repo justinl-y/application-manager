@@ -22,7 +22,7 @@ const Roles = ({ history, match, rolesList, addRole, editRole, deleteRole }) => 
     <div className={styles['add-role-container']}>
       <Link to={`${match.url}/new`}>
         <FloatingActionButton style={style}>
-          <ContentAdd onClick={addRole} />
+          <ContentAdd onTouchTap={addRole} />
         </FloatingActionButton>
       </Link>
     </div>

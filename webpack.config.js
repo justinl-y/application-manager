@@ -88,16 +88,22 @@ const config = {
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         exclude: [/node_modules/],
-        use: [
-          'file-loader?name=[path][name].[ext]',
-        ],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+          },
+        }],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
         exclude: [/node_modules/],
-        use: [
-          'file-loader?name=[path][name].[ext]',
-        ],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+          },
+        }],
       },
     ],
   },

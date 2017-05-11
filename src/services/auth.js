@@ -1,6 +1,5 @@
 import firebase from 'firebase';
-import userDetails from './api/user-details';
-// import guestInvites from './api/guest-invites';
+import userDetails from './api/user-detail';
 
 const signUpUser = signUpDetails => firebase.auth()
     .createUserWithEmailAndPassword(signUpDetails.email, signUpDetails.password)
@@ -54,7 +53,7 @@ const signInUser = signInDetails => firebase.auth()
               lastName: result.lastName,
               email: signInDetails.email,
             },
-            message: (`Sign-in successful, welcome back to Pot Lucky ${result.firstName}`),
+            message: (`Sign-in successful, welcome back to Application Manager ${result.firstName}`),
           };
 
           return signInResult;

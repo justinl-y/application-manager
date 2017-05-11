@@ -131,14 +131,14 @@ class SignUp extends Gandalf {
 
                 <div className={styles['form-buttons']}>
                   <FlatButton
-                    onClick={this.handleCancel}
+                    onTouchTap={this.handleCancel}
                     label="Cancel"
                     style={style.button}
                   />
                   <RaisedButton
-                    backgroundColor={colors.cyan500}
+                    backgroundColor={colors.blue400}
                     labelColor={colors.white}
-                    onClick={this.handleSignUp}
+                    onTouchTap={this.handleSignUp}
                     label="Sign-Up"
                     style={style.button}
                   />

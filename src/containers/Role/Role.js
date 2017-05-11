@@ -207,8 +207,6 @@ class Role extends Component {
 
     const roleData = this.props.isNew ? roleContent : { ...roleContent, itemId: data.id };
 
-    // console.log(roleData);
-
     this.props.saveRole(roleData);
     this.props.history.push(`${this.props.match.url}`);
   }
@@ -420,13 +418,13 @@ class Role extends Component {
                 <div className={styles['form-buttons']}>
                   <FlatButton
                     label="Cancel"
-                    onClick={this.handleCancel}
+                    onTouchTap={this.handleCancel}
                     style={style.button}
                   />
                   <RaisedButton
-                    backgroundColor={colors.cyan500}
+                    backgroundColor={colors.blue400}
                     labelColor={colors.white}
-                    onClick={this.handleSubmit}
+                    onTouchTap={this.handleSubmit}
                     label="Save"
                     style={style.button}
                   />

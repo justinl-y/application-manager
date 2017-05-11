@@ -100,14 +100,14 @@ class SignIn extends Gandalf {
                 { fields.password.element }
                 <div className={styles['form-buttons']}>
                   <FlatButton
-                    onClick={this.handleSignUp}
+                    onTouchTap={this.handleSignUp}
                     label="Sign-Up"
                     style={style.button}
                   />
                   <RaisedButton
-                    backgroundColor={colors.cyan500}
+                    backgroundColor={colors.blue400}
                     labelColor={colors.white}
-                    onClick={this.handleSignIn}
+                    onTouchTap={this.handleSignIn}
                     label="Sign-In"
                     style={style.button}
                   />
