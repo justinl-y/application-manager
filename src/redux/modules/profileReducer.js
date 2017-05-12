@@ -13,7 +13,7 @@ const userProfileReducer = (state = initialState, action) => {
     case EDIT_USER_PROFILE:
       return { ...state, ...action.payload };
     case REMOVE_USER_PROFILE:
-      return state;
+      return {};
     default:
       return state;
   }

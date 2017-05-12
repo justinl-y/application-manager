@@ -11,7 +11,7 @@ const setUserSignIn = signInData => ({
   payload: signInData,
 });
 
-const setUserSignOut = () => ({
+export const setUserSignOut = () => ({
   type: USER_SIGN_OUT,
   payload: null,
 });

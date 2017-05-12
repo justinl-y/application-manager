@@ -50,7 +50,7 @@ const deleteUserAccount = () => {
   userDetailApi.delete(user.uid);
 
   // delete firebase account
-  user.delete().then(() => {
+  return user.delete().then(() => {
     console.log('User account deleted');
   })
   .catch((err) => {

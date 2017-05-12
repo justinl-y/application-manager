@@ -1,8 +1,7 @@
-// import { loadingResource, doneLoading } from './isLoadingActions';
-import profileApi from '../../services/api/user-detail';
+import userApi from '../../services/firebase/user';
+import { setUserSignOut } from '../modules/authenticationActions';
 
 export const SET_USER_PROFILE = 'SET_USER_PROFILE';
-// export const UNLOAD_PROFILE = 'UNLOAD_PROFILE';
 export const EDIT_USER_PROFILE = 'EDIT_USER_PROFILE';
 export const REMOVE_USER_PROFILE = 'REMOVE_USER_PROFILE';
 
@@ -16,24 +15,14 @@ export const editProfile = id => ({
   payload: id,
 });
 
-export const removeProfile = id => ({
+export const removeProfile = () => ({
   type: REMOVE_USER_PROFILE,
-  payload: id,
+  payload: null,
 });
-
-/* export const fetchProfile = data => (dispatch) => {
-  dispatch(loadingResource());
-  profileApi.get(data)
-      .then((result) => {
-        dispatch(loadProfile(result));
-        dispatch(doneLoading());
-      })
-      .catch(error => console.log(error));
-};*/
 
 export const updateProfile = data => (dispatch) => {
   // dispatch(loadingResource());
-  profileApi.edit(data)
+  userApi.edit(data)
       .then((result) => {
         dispatch(editProfile(result));
         // dispatch(doneLoading());
@@ -41,12 +30,11 @@ export const updateProfile = data => (dispatch) => {
       .catch(error => console.log(error));
 };
 
-export const deleteProfile = data => (dispatch) => {
-  // dispatch(loadingResource());
-  profileApi.delete(data)
-      .then((result) => {
-        dispatch(removeProfile(result));
-        // dispatch(doneLoading());
+export const deleteProfile = () => (dispatch) => {
+  userApi.delete()
+      .then(() => {
+        dispatch(removeProfile());
+        dispatch(setUserSignOut());
       })
       .catch(error => console.log(error));
 };

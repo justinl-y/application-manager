@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import NavbarMain from '../../components/NavBarMain';
 import ProfileOptionsItems from '../../components/ProfileOptionsItems';
 import ProfileContainer from '../Profile';
+import ProfileDeleteContainer from '../../containers/ProfileDelete';
 
 const Profile = ({ history, match }) => (
   <div>
@@ -29,6 +30,12 @@ const Profile = ({ history, match }) => (
         path={`${match.url}/edit`}
         component={() => (
           <ProfileContainer history={history} match={match} />
+        )}
+      />
+      <Route
+        path={`${match.url}/delete`}
+        component={() => (
+          <ProfileDeleteContainer history={history} match={match} />
         )}
       />
     </Switch>
