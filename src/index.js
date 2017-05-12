@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-// import firebaseConfig from '../config/firebase';
 import Config from '../config.json';
 import store from './redux/store';
 import muiTheme from './styles/mui-theme';
@@ -19,7 +18,6 @@ import './styles/index.scss';
 injectTapEventPlugin();
 
 // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
 firebase.initializeApp(Config.firebaseConfig);
 
 ReactDOM.render(
