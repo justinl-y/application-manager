@@ -9,6 +9,18 @@ const getRoles = userId => (
     ))
 );
 
+const deleteRoles = userId => (
+  api.set(`/roles/${userId}`, null)
+    .then(() => (
+      'Role deleted.'
+    ))
+    .catch(err => (
+      // `The following error has occured: ${err}`
+      console.log(err)
+    ))
+);
+
 export default {
   get: getRoles,
+  delete: deleteRoles,
 };

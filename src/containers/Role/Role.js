@@ -55,34 +55,33 @@ class Role extends Component {
       fields: {},
     });
 
-    const fields = {};
-
-    fields.id = role.id;
-    fields.referenceNumber = role.referenceNumber;
-    fields.roleTitle = role.roleTitle;
-    fields.roleType = role.roleType;
-    fields.hiringCompany = role.hiringCompany;
-    fields.location = role.location;
-    fields.description = role.description;
-    fields.website = role.website;
+    const fields = {
+      id: role.id,
+      referenceNumber: role.referenceNumber,
+      roleTitle: role.roleTitle,
+      roleType: role.roleType,
+      hiringCompany: role.hiringCompany,
+      location: role.location,
+      description: role.description,
+      website: role.website,
+      agencyName: role.agencyName,
+      firstName: role.firstName,
+      lastName: role.lastName,
+      telephoneNumber: role.telephoneNumber,
+      email: role.email,
+      notes: role.notes,
+    };
 
     if (role.datePosted) {
       fields.datePosted = new Date(role.datePosted);
     }
-
-    fields.agencyName = role.agencyName;
-    fields.firstName = role.firstName;
-    fields.lastName = role.lastName;
-    fields.telephoneNumber = role.telephoneNumber;
-    fields.email = role.email;
-
     if (role.dateApplied) {
       fields.dateApplied = new Date(role.dateApplied);
     }
 
-    fields.notes = role.notes;
-
-    this.setState({ fields });
+    this.setState({
+      fields,
+    });
   }
 
   roleTypeItems() {

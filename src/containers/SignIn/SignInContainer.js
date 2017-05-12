@@ -16,7 +16,6 @@ SignInContainer.defaultProps = {
   userSignedIn: false,
 };
 
-
 SignInContainer.propTypes = {
   signInUser: PropTypes.func.isRequired,
   userSignedIn: PropTypes.bool,
@@ -24,7 +23,7 @@ SignInContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  userSignedIn: state.userAuthentication.signedIn.signIn,
+  userSignedIn: state.user.authentication.signedIn.signIn,
 });
 
 const mapDispatchToProps = dispatch => ({

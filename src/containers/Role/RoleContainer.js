@@ -88,7 +88,7 @@ RoleContainer.propTypes = {
 
 const mapStateToProps = state => ({
   isNew: state.role.isNew,
-  userId: state.userAuthentication.uId,
+  userId: state.user.authentication.uId,
   roleId: state.role.id,
   role: state.role,
   roleTypes: state.roleTypes,

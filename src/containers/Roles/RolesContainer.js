@@ -56,7 +56,7 @@ RolesContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  userId: state.userAuthentication.uId,
+  userId: state.user.authentication.uId,
   rolesList: state.rolesList,
 });
 

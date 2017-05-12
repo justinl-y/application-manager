@@ -6,18 +6,16 @@ import {
 const initialState = {
   signedIn: {},
   uId: null,
-  userName: {},
   message: null,
 };
 
-const userSignInReducer = (state = initialState, action) => {
+const userAuthenticationReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_SIGN_IN:
       return {
         ...state,
         signedIn: { ...action.payload.signedIn },
         uId: action.payload.uId,
-        userName: { ...action.payload.userName },
         message: action.payload.message,
       };
     case USER_SIGN_OUT:
@@ -25,7 +23,6 @@ const userSignInReducer = (state = initialState, action) => {
         ...state,
         signedIn: {},
         uId: null,
-        userName: {},
         message: 'Goodbye. See you soon.',
       };
     default:
@@ -33,4 +30,4 @@ const userSignInReducer = (state = initialState, action) => {
   }
 };
 
-export default userSignInReducer;
+export default userAuthenticationReducer;

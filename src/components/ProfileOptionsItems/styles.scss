@@ -1,0 +1,30 @@
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 25px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin button {
+	display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 200px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  color: white;
+  text-transform: uppercase;
+  background-color:rgb(66, 165, 245);
+  font-weight: bold;
+}
+
+.button {
+  @include button;
+  margin-left: 10px;
+  margin-right: 10px;
+}

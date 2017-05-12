@@ -1,4 +1,5 @@
-import auth from '../../services/auth';
+import auth from '../../services/firebase/auth';
+import { setUserProfile } from './profileActions';
 
 // actions
 export const USER_SIGN_IN = 'USER_SIGN_IN';
@@ -19,14 +20,23 @@ const setUserSignOut = () => ({
 export const userSignUp = signUpDetails => (dispatch) => {
   auth.signUpUser(signUpDetails)
       .then((signUpResult) => {
-        dispatch(setUserSignIn(signUpResult));
+         // to authentication reducer
+        dispatch(setUserSignIn(signUpResult.userAuthentication));
+        // to profile reducer
+        dispatch(setUserProfile(signUpResult.userProfile));
+      })
+      .catch((err) => {
+        console.log(err);
       });
 };
 
 export const userSignIn = signInDetails => (dispatch) => {
   auth.signInUser(signInDetails)
       .then((signInResult) => {
-        dispatch(setUserSignIn(signInResult));
+        // to authentication reducer
+        dispatch(setUserSignIn(signInResult.userAuthentication));
+        // to profile reducer
+        dispatch(setUserProfile(signInResult.userProfile));
       })
       .catch((err) => {
         console.log(err);

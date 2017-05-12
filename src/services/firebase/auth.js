@@ -1,37 +1,38 @@
 import firebase from 'firebase';
-import userDetails from './api/user-detail';
+import userDetailApi from '../api/user-detail';
 
 const signUpUser = signUpDetails => firebase.auth()
     .createUserWithEmailAndPassword(signUpDetails.email, signUpDetails.password)
     .then(() => {
       const uId = firebase.auth().currentUser.uid;
-      const userName = {
+      const userProfile = {
         firstName: signUpDetails.firstName,
         lastName: signUpDetails.lastName,
         emailAddress: signUpDetails.email,
       };
 
       // userDetails insert to firebase
-      userDetails.createUserDetails(uId, userName);
-
-      // check for existing guest email invites and process if true
-      // guestInvites.processSignUpEmailInvites(uId, userName.emailAddress);
+      userDetailApi.add(uId, userProfile);
 
       const signUpResult = {
-        uId,
-        signedIn: { signUp: true, signIn: false },
-        userName,
-        message: (`Sign-up successful, welcome to Application Manager ${signUpDetails.firstName}`),
+        userAuthentication: {
+          uId,
+          signedIn: { signUp: true, signIn: true },
+          message: (`Sign-up successful, welcome to Application Manager ${signUpDetails.firstName}`),
+        },
+        userProfile,
       };
 
       return signUpResult;
     })
     .catch((error) => {
       const signUpResult = {
-        uId: null,
-        signedIn: { signUp: false, signIn: false },
-        userName: {},
-        message: (`Sorry, sign-up was unsuccessful. The following error has occured: ${error.code}, ${error.message}`),
+        userAuthentication: {
+          uId: null,
+          signedIn: { signUp: false, signIn: false },
+          message: (`Sorry, sign-up was unsuccessful. The following error has occured: ${error.code}, ${error.message}`),
+        },
+        userProfile: {},
       };
 
       return signUpResult;
@@ -43,17 +44,19 @@ const signInUser = signInDetails => firebase.auth()
       const uId = firebase.auth().currentUser.uid;
 
       // get userDetails from firebase and return signInResult to thunk
-      return userDetails.get(uId)
+      return userDetailApi.get(uId)
         .then((result) => {
           const signInResult = {
-            uId,
-            signedIn: { signUp: false, signIn: true },
-            userName: {
+            userAuthentication: {
+              uId,
+              signedIn: { signUp: false, signIn: true },
+              message: (`Sign-in successful, welcome back to Application Manager ${result.firstName}`),
+            },
+            userProfile: {
               firstName: result.firstName,
               lastName: result.lastName,
-              email: signInDetails.email,
+              emailAddress: signInDetails.email,
             },
-            message: (`Sign-in successful, welcome back to Application Manager ${result.firstName}`),
           };
 
           return signInResult;
@@ -61,10 +64,12 @@ const signInUser = signInDetails => firebase.auth()
     })
     .catch((error) => {
       const signInResult = {
-        uId: null,
-        signedIn: { signUp: false, signIn: false },
-        userName: {},
-        message: (`Sorry, sign-in was unsuccessful. The following error has occured: ${error.code}, ${error.message}`),
+        userAuthentication: {
+          uId: null,
+          signedIn: { signUp: false, signIn: false },
+          message: (`Sorry, sign-in was unsuccessful. The following error has occured: ${error.code}, ${error.message}`),
+        },
+        userProfile: {},
       };
 
       return signInResult;

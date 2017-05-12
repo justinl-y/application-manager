@@ -24,11 +24,9 @@ const Main = () => (
   <div>
     <NavbarMain />
     <div className={styles.content}>
-      <h2>Application Manager</h2>
+      <h2>Dashboard</h2>
       <div className={styles['button-container']}>
-        <Link to="/roles"><div className={styles['button-1']}>Roles</div></Link>
-        <Link to="/roles"><div className={styles['button-2']}>Roles</div></Link>
-        <Link to="/roles"><div className={styles['button-3']}>Roles</div></Link>
+        <p>Dashboard items here</p>
       </div>
     </div>
   </div>

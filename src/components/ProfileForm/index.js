@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import Gandalf from 'gandalf-validator';
+
 import { Card, CardText } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -10,7 +11,7 @@ import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 import * as colors from 'material-ui/styles/colors';
 import styles from './styles.scss';
 
-class Profile extends Component {
+class ProfileForm extends Gandalf {
   constructor() {
     super();
 
@@ -109,7 +110,7 @@ class Profile extends Component {
 
     console.log(data);
 
-    this.props.updateProfile(data);
+    // this.props.updateProfile(data);
     this.props.history.push(`${this.props.match.url}`);
     // this.props.history.push('/');
   }
@@ -210,11 +211,4 @@ class Profile extends Component {
   }
 }
 
-Profile.propTypes = {
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
-  updateProfile: PropTypes.func.isRequired,
-};
-
-export default Profile;
+export default ProfileForm;

@@ -6,7 +6,7 @@ import Main from '../Main';
 import SignInContainer from '../../containers/SignIn';
 import SignUpContainer from '../../containers/SignUp';
 import RolesContainer from '../Roles';
-import ProfileContainer from '../Profile';
+import ProfileOptionsContainer from '../ProfileOptions';
 import NotFound from '../../components/NotFound';
 
 import styles from './styles.scss';
@@ -18,7 +18,7 @@ const App = () => (
       <Route path="/sign-in" component={SignInContainer} />
       <Route path="/sign-up" component={SignUpContainer} />
       <PrivateRoute path="/roles" component={RolesContainer} />
-      <PrivateRoute path="/profile" component={ProfileContainer} />
+      <PrivateRoute path="/profile" component={ProfileOptionsContainer} />
       <Route component={NotFound} />
     </Switch>
   </div>

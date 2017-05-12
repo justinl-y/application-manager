@@ -12,18 +12,18 @@ const SignUpContainer = props => (
   />
 );
 
+SignUpContainer.defaultProps = {
+  userSignedUp: false,
+};
+
 SignUpContainer.propTypes = {
   signUpUser: PropTypes.func.isRequired,
   userSignedUp: PropTypes.bool,
   history: PropTypes.object.isRequired,
 };
 
-SignUpContainer.defaultProps = {
-  userSignedUp: false,
-};
-
 const mapStateToProps = state => ({
-  userSignedUp: state.userAuthentication.signedIn.signUp,
+  userSignedUp: state.user.authentication.signedIn.signUp,
 });
 
 const mapDispatchToProps = dispatch => ({
