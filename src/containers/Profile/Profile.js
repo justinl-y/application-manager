@@ -37,7 +37,7 @@ class Profile extends Component {
       firstName: profile.firstName,
       lastName: profile.lastName,
       emailAddress: profile.emailAddress,
-      password: '',
+      newPassword: '',
     };
 
     this.setState({
@@ -169,21 +169,21 @@ class Profile extends Component {
 
                 <TextField
                   style={style.textField}
-                  name="password"
-                  hintText="Password"
-                  errorText={this.state.fieldErrors.password}
-                  floatingLabelText="Password"
-                  value={this.state.fields.password || ''}
+                  name="newPassword"
+                  hintText="New Password"
+                  errorText={this.state.fieldErrors.newPassword}
+                  floatingLabelText="New Password"
+                  value={this.state.fields.newPassword || ''}
                   onChange={e => this.handleTextFieldChange(e)}
                 />
 
                 <TextField
                   style={style.textField}
-                  name="confirmPassword"
-                  hintText="Confirm Password"
-                  errorText={this.state.fieldErrors.confirmPassword}
-                  floatingLabelText="Confirm Password"
-                  value={this.state.fields.confirmPassword || ''}
+                  name="confirmNewPassword"
+                  hintText="Confirm New Password"
+                  errorText={this.state.fieldErrors.confirmNewPassword}
+                  floatingLabelText="Confirm New Password"
+                  value={this.state.fields.confirmNewPassword || ''}
                   onChange={e => this.handleTextFieldChange(e)}
                 />
 
