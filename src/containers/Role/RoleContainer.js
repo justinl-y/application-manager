@@ -15,7 +15,7 @@ class RoleContainer extends Component {
     this.updateRoleWithUserId = this.updateRoleWithUserId.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.isNew) {
       this.fetchRoleWithUserId(this.props.roleId);
     }

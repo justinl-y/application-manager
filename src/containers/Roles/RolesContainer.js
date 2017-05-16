@@ -14,7 +14,7 @@ class RolesContainer extends Component {
     this.deleteRoleWithUserId = this.deleteRoleWithUserId.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchRolesWithUserId();
   }
 
